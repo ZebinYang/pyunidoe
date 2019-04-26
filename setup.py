@@ -19,6 +19,6 @@ setup(name='pyUniDOE',
       license='GPL',
       packages=['pyUniDOE'],
       ext_modules=[pyUniDOE_module],
-      package_dir = {'pyUniDOE': '/'},
+      package_dir = {'pyUniDOE': ''},
       package_data = {'pyUniDOE': ['data/*.json']},
       install_requires=['matplotlib', 'numpy', 'pandas', 'seaborn'], zip_safe=False)
