@@ -1,0 +1,6 @@
+# ignore all builds
+build/*
+dist/*
+pyUniDOE.egg-info/*
+swig_examples/*
+compile.ipynb
