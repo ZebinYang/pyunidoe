@@ -3,4 +3,4 @@ build/*
 dist/*
 pyUniDOE.egg-info/*
 swig_examples/*
-
+pyUniDOE/__pycache__/*

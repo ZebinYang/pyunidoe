@@ -53,7 +53,7 @@ def DesignQuery(n,s,q,crit="CD2", ShowCrit = True):
         D = DataX['Design'][idx[0]]
         if(ShowCrit):
             print("CD2 =", DesignEval(D, "CD2"),"MD2 =", DesignEval(D, "MD2"),"Maximin =", DesignEval(D, "maximin"))
-    return D
+    return np.array(D, dtype = int)
 
 
 def DesignEval(x, crit="CD2"):
@@ -169,8 +169,8 @@ def GenUD(n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,hits_
             return "The size of the input design matrix does not match the given n,s,q."
 
     results = SATA_UD(n,s,q,init,initX,crit,maxiter,hits_ratio,levelpermt)
-    stat = {"initial_design": np.array(results.Init_Design), 
-           "final_design": np.array(results.Final_Design), 
+    stat = {"initial_design": np.array(results.Init_Design, dtype = int), 
+           "final_design": np.array(results.Final_Design, dtype = int), 
           "initial_criterion": results.Init_Obj, 
           "final_criterion": results.Final_Obj, 
           "time_consumed": results.Time_Second, 
@@ -260,8 +260,8 @@ def GenAUD(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,h
 
     nnp = xp.shape[0]
     results = SATA_AUD(xp,n-nnp,s,q,init,initX,crit,maxiter,hits_ratio,levelpermt)
-    stat = {"initial_design": np.array(results.Init_Design), 
-           "final_design": np.array(results.Final_Design), 
+    stat = {"initial_design": np.array(results.Init_Design, dtype = int), 
+           "final_design": np.array(results.Final_Design, dtype = int), 
           "initial_criterion": results.Init_Obj, 
           "final_criterion": results.Final_Obj, 
           "time_consumed": results.Time_Second, 
@@ -351,8 +351,8 @@ def GenAUD_COL(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=100
                 
     nvp = xp.shape[1]
     results = SATA_AUD_COL(xp, s - nvp, q, init, initX, crit, maxiter, hits_ratio, levelpermt)
-    stat = {"initial_design": np.array(results.Init_Design), 
-           "final_design": np.array(results.Final_Design), 
+    stat = {"initial_design": np.array(results.Init_Design, dtype = int), 
+           "final_design": np.array(results.Final_Design, dtype = int), 
           "initial_criterion": results.Init_Obj, 
           "final_criterion": results.Final_Obj, 
           "time_consumed": results.Time_Second, 
@@ -418,7 +418,7 @@ def GenUD_MS(n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
         tmp = DesignEval(stat["final_design"], crit = crit)
         if (tmp < bestcrit):
             bestcrit = tmp
-            bestdesign = np.array(stat["final_design"])
+            bestdesign = np.array(stat["final_design"], dtype = int)
     if vis: 
         fig, axes = plt.subplots(int(np.ceil(1.0*nshoot/5)),5, figsize = (15,4*np.ceil(1.0*nshoot/5)), sharex=True, sharey=True)
         plt.setp(axes, xticks=[], yticks=[])
@@ -493,7 +493,7 @@ def GenAUD_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
         tmp = DesignEval(stat["final_design"], crit = crit)
         if (tmp < bestcrit):
             bestcrit = tmp
-            bestdesign = np.array(stat["final_design"])
+            bestdesign = np.array(stat["final_design"], dtype = int)
     if vis: 
         fig, axes = plt.subplots(int(np.ceil(1.0*nshoot/5)),5, figsize = (15,4*np.ceil(1.0*nshoot/5)), sharex=True, sharey=True)
         plt.setp(axes, xticks=[], yticks=[])
@@ -568,7 +568,7 @@ def GenAUD_COL_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
         tmp = DesignEval(stat["final_design"], crit = crit)
         if (tmp < bestcrit):
             bestcrit = tmp
-            bestdesign = np.array(stat["final_design"])
+            bestdesign = np.array(stat["final_design"], dtype = int)
     if vis: 
         fig, axes = plt.subplots(int(np.ceil(1.0*nshoot/5)),5, figsize = (15,4*np.ceil(1.0*nshoot/5)), sharex=True, sharey=True)
         plt.setp(axes, xticks=[], yticks=[])
