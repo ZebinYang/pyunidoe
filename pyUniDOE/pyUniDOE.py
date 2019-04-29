@@ -255,6 +255,7 @@ def GenAUD(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,h
       crit = "CD2"
       res = GenAUD(xp,n,s,q,crit=crit,maxiter=100,vis = True)
     """
+    
    #check the arguments
     if (isinstance(n,int)&isinstance(s,int)&isinstance(q,int) == False): 
         return "Wrong types of n,s,q."

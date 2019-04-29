@@ -15,5 +15,5 @@ setup(name='pyUniDOE',
       packages=['pyUniDOE'],
       ext_modules=[pyUniDOE_module],
       package_dir = {'pyUniDOE': 'pyUniDOE'},
-      package_data = {'pyUniDOE': ['../data/*.json']},
+      package_data = {'pyUniDOE': ['data/*.json']},
       install_requires=['matplotlib', 'numpy', 'pandas', 'seaborn'], zip_safe=False)
