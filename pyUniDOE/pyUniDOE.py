@@ -50,10 +50,10 @@ def DesignQuery(n,s,q,crit="CD2", ShowCrit = True):
         print("No design found.")
         return None
     else:
-        D = DataX['Design'][idx[0]]
+        D = np.array(DataX['Design'][idx[0]], dtype = int)  
         if(ShowCrit):
             print("CD2 =", DesignEval(D, "CD2"),"MD2 =", DesignEval(D, "MD2"),"Maximin =", DesignEval(D, "maximin"))
-    return np.array(D, dtype = int)
+    return D
 
 
 def DesignEval(x, crit="CD2"):
@@ -78,14 +78,19 @@ def DesignEval(x, crit="CD2"):
              "A2" -- Minimize Average Chi-Square.
 
     Example:
-      x = [[1, 2],
-           [3, 3],
-           [2, 1]]
-      crit="MD2"
+      x = np.array([[1, 2],
+               [3, 3],
+               [2, 1]])
+      crit = "MD2"
       obj = DesignEval(x,crit)
     """
+    if (not isinstance(x, np.ndarray)):
+        return "The design matrix must be a numpy array."
+    elif ((np.min(x)<=0) | (x.dtype != np.int)):
+        return "The values in design matrix should be integers: 1,2,3,..."
+    
     nlevel = int(np.max(x) - np.min(x) + 1) 
-    return(CritEval(x,nlevel,crit))
+    return CritEval(x.tolist(),nlevel,crit)
 
 
 def GenUD(n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,hits_ratio = 0.1,levelpermt=False,vis=False):
@@ -104,9 +109,9 @@ def GenUD(n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,hits_
 
               "rand" --Randomly generate initial design (default);
 
-              "input". --User specified.
+              "input" --User specified.
 
-    -initX: a user-defined integer matrix object. This is the user-defined initial design matrix, and will be used when init="input".
+    -initX: a user-defined numpy integer matrix object. This is the user-defined initial design matrix, and will be used when init="input".
 
     - crit: a character object. Type of criterion to use:
 
@@ -153,8 +158,8 @@ def GenUD(n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,hits_
       s=2
       q=3
       initX = np.array([[1, 1],
-                        [2, 2],
-                        [3, 3]])
+                  [2, 2],
+                  [3, 3]])
       stat = GenUD(n,s,q, init="input", initX = initX, maxiter=100)
     """
    #check the arguments
@@ -165,10 +170,14 @@ def GenUD(n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,hits_
     elif ((s<=1) | (n<=2) | (q <=1)): 
         return "The size of design should be larger than 2*2."
     elif (init=="input"):
-        if ((n != initX.shape[0]) | (s != initX.shape[1]) | (q != (np.max(initX) - np.min(initX) + 1))):
-            return "The size of the input design matrix does not match the given n,s,q."
-
-    results = SATA_UD(n,s,q,init,initX,crit,maxiter,hits_ratio,levelpermt)
+        if ((not isinstance(initX,np.ndarray))):
+            return "initX must be a numpy array."
+        elif ((n != initX.shape[0]) | (s != initX.shape[1])):
+            return "The size of the input design matrix does not match the given n,s."
+        elif ((np.min(initX)<1) | (np.max(initX)>q) | (initX.dtype != np.int) |(q != (np.max(initX) - np.min(initX) + 1))):
+            return "The values of the input design matrix should be integers within: 1,2,3...,q."
+        
+    results = SATA_UD(n,s,q,init,initX.tolist(),crit,maxiter,hits_ratio,levelpermt)
     stat = {"initial_design": np.array(results.Init_Design, dtype = int), 
            "final_design": np.array(results.Final_Design, dtype = int), 
           "initial_criterion": results.Init_Obj, 
@@ -198,7 +207,7 @@ def GenAUD(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,h
     
     Arguments:
     
-    -xp: an integer matrix object. Representing the previous existing design matrix.
+    -xp: a numpy integer matrix object. Representing the previous existing design matrix.
 
     -n: an integer object. Run of Experiment (including the previous design xp).
 
@@ -210,9 +219,9 @@ def GenAUD(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,h
 
               "rand" --Randomly generate initial design (default);
 
-              "input". --User specified.
+              "input" --User specified.
 
-    -initX: a user-defined integer matrix object. This is the user-defined initial augmentation matrix, and will be used when init="input".
+    -initX: a user-defined numpy integer matrix object. This is the user-defined initial augmentation matrix, and will be used when init="input".
 
     - crit: a character object. Type of criterion to use:
 
@@ -241,8 +250,8 @@ def GenAUD(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,h
       s=2
       q=3
       xp = np.array([[1, 1],
-                      [2, 2],
-                      [3, 3]])
+                [2, 2],
+                [3, 3]])
       crit = "CD2"
       res = GenAUD(xp,n,s,q,crit=crit,maxiter=100,vis = True)
     """
@@ -253,13 +262,22 @@ def GenAUD(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,h
         return "n should be multiple of q."
     elif ((s<=1) | (n<=2) | (q <=1)): 
         return "The size of design should be larger than 2*2."
+    elif (not isinstance(xp,np.ndarray)):
+        return "xp must be a numpy array."
     elif ((n <= xp.shape[0]) | (s != xp.shape[1])):
-        return "The size of the existing design matrix xp does not match the given n,s,q."
-    elif(xp.shape[0]==0):
-        return "Please input X0 to do the augmented searching. End of program."
+        return "The size of the existing design matrix xp does not match the given n,s."
+    elif ((xp.dtype != np.int) | (1 > np.min(xp)) | (q < np.max(xp))):
+        return "The values of the existing design matrix x0 should be integers within: 1,2,3...,q."
+    elif (init=="input"):
+        if ((not isinstance(initX,np.ndarray))):
+            return "initX must be a numpy array."
+        elif ((n <= initX.shape[0]) | (s != initX.shape[1])):
+            return "The size of the input design matrix does not match the given n,s."
+        elif ((np.min(initX)<1) | (q < np.max(initX)) | (initX.dtype != np.int)):
+            return "The values of the input design matrix should be integers within: 1,2,3...,q."
 
     nnp = xp.shape[0]
-    results = SATA_AUD(xp,n-nnp,s,q,init,initX,crit,maxiter,hits_ratio,levelpermt)
+    results = SATA_AUD(xp.tolist(),n-nnp,s,q,init,initX.tolist(),crit,maxiter,hits_ratio,levelpermt)
     stat = {"initial_design": np.array(results.Init_Design, dtype = int), 
            "final_design": np.array(results.Final_Design, dtype = int), 
           "initial_criterion": results.Init_Obj, 
@@ -289,7 +307,7 @@ def GenAUD_COL(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=100
     
     Arguments:
     
-    -xp: an integer matrix object, representing the previous existing design matrix.
+    -xp: a numpy integer matrix object, representing the previous existing design matrix.
 
     -n: an integer object. Run of Experiment.
 
@@ -301,9 +319,9 @@ def GenAUD_COL(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=100
 
               "rand" --Randomly generate initial design (default);
 
-              "input". --User specified.
+              "input" --User specified.
 
-    -initX: a user-defined integer matrix object. This is the user-defined initial augmentation matrix, and will be used when init="input".
+    -initX: a user-defined numpy integer matrix object. This is the user-defined initial augmentation matrix, and will be used when init="input".
 
     - crit: a character object. Type of criterion to use:
 
@@ -332,8 +350,8 @@ def GenAUD_COL(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=100
       s=4
       q=3
       xp = np.array([[1, 1],
-                      [2, 2],
-                      [3, 3]])
+                [2, 2],
+                [3, 3]])
       crit = "CD2"
       res = GenAUD_COL(xp,n,s,q,crit=crit,maxiter=100,vis = True)
     """
@@ -344,13 +362,22 @@ def GenAUD_COL(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=100
         return "n should be multiple of q."
     elif ((s<=1) | (n<=2) | (q <=1)): 
         return "The size of design should be larger than 2*2."
+    elif (not isinstance(xp,np.ndarray)):
+        return "xp must be a numpy array."
     elif ((n != xp.shape[0]) | (s <= xp.shape[1])):
-        return "The size of the existing design matrix xp does not match the given n,s,q."
-    elif(xp.shape[0]==0):
-        return "Please input X0 to do the augmented searching. End of program."
-                
+        return "The size of the existing design matrix xp does not match the given n,s."
+    elif ((xp.dtype != np.int)| (1 > np.min(xp)) | (q < np.max(xp)) ):
+        return "The values of the existing design matrix x0 should be integers within: 1,2,3...,q."
+    elif (init=="input"):
+        if ((not isinstance(initX,np.ndarray))):
+            return "initX must be a numpy array."
+        elif ((n != initX.shape[0]) | (s <= initX.shape[1])):
+            return "The size of the input design matrix does not match the given n,s."
+        elif ((np.min(initX)<1) | (q < np.max(initX)) | (initX.dtype != np.int)):
+            return "The values of the input design matrix initX should be integers within: 1,2,3...,q."
+
     nvp = xp.shape[1]
-    results = SATA_AUD_COL(xp, s - nvp, q, init, initX, crit, maxiter, hits_ratio, levelpermt)
+    results = SATA_AUD_COL(xp.tolist(), s - nvp, q, init, initX.tolist(), crit, maxiter, hits_ratio, levelpermt)
     stat = {"initial_design": np.array(results.Init_Design, dtype = int), 
            "final_design": np.array(results.Final_Design, dtype = int), 
           "initial_criterion": results.Init_Obj, 
@@ -452,7 +479,7 @@ def GenAUD_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
     
     Arguments:
     
-    -xp: an integer matrix object, representing the previous existing design matrix.
+    -xp: a numpy integer matrix object, representing the previous existing design matrix.
 
     -n: an integer object. Run of Experiment.
 
@@ -527,7 +554,7 @@ def GenAUD_COL_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
     
     Arguments:
     
-    -xp: an integer matrix object, representing the previous existing design matrix.
+    -xp: a numpy integer matrix object, representing the previous existing design matrix.
 
     -n: an integer object. Run of Experiment.
 
