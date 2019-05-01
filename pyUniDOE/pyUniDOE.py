@@ -182,7 +182,9 @@ def GenUD(n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,hits_
             return "The size of the input design matrix does not match the given n,s."
         elif ((1 != (np.min(initX))) | (q != (np.max(initX))) | (initX.dtype != np.int)):
             return "The values of the input design matrix should be integers within: 1,2,3...,q."
-        
+        elif (any(np.array([v for i in range(initX.shape[1]) for v in np.unique(initX[:,i], return_counts=True)[1]])>n/q)):
+            return "initX does not follow a balanced design."
+
     results = SATA_UD(n,s,q,init,initX.tolist(),crit,maxiter,hits_ratio,levelpermt)
     stat = {"initial_design": np.array(results.Init_Design, dtype = int), 
            "final_design": np.array(results.Final_Design, dtype = int), 
