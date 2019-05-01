@@ -275,7 +275,7 @@ def GenAUD(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,h
         return "The size of the existing design matrix xp does not match the given n,s."
     elif ((xp.dtype != np.int) | (1 > np.min(xp)) | (q < np.max(xp))):
         return "The values of the existing design matrix x0 should be integers within: 1,2,3...,q."
-    elif (any(np.unique(xp, return_counts=True)[1]>n/q)):
+    elif (np.array([v for i in range(xp.shape[1]) for v in np.unique(xp[:,i], return_counts=True)[1]])>n/q):
         return "xp does not follow a balanced design, please increase the number of n or remove duplicated elements (per column) in xp."
     elif (init=="input"):
         if ((not isinstance(initX,np.ndarray))):
@@ -377,7 +377,7 @@ def GenAUD_COL(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=100
         return "The size of the existing design matrix xp does not match the given n,s."
     elif ((xp.dtype != np.int)| (1 > np.min(xp)) | (q < np.max(xp)) ):
         return "The values of the existing design matrix x0 should be integers within: 1,2,3...,q."
-    elif (any(np.unique(xp, return_counts=True)[1]>n/q)):
+    elif (np.array([v for i in range(xp.shape[1]) for v in np.unique(xp[:,i], return_counts=True)[1]])>n/q):
         return "xp does not follow a balanced design."
     elif (init=="input"):
         if ((not isinstance(initX,np.ndarray))):
@@ -536,7 +536,7 @@ def GenAUD_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
         return "The size of the existing design matrix xp does not match the given n,s."
     elif ((xp.dtype != np.int) | (1 > np.min(xp)) | (q < np.max(xp))):
         return "The values of the existing design matrix x0 should be integers within: 1,2,3...,q."
-    elif (any(np.unique(xp, return_counts=True)[1]>n/q)):
+    elif (np.array([v for i in range(xp.shape[1]) for v in np.unique(xp[:,i], return_counts=True)[1]])>n/q):
         return "xp does not follow a balanced design, please increase the number of n or remove duplicated elements (per column) in xp."
     
     crit_list = []
@@ -626,7 +626,7 @@ def GenAUD_COL_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
         return "The size of the existing design matrix xp does not match the given n,s."
     elif ((xp.dtype != np.int)| (1 > np.min(xp)) | (q < np.max(xp)) ):
         return "The values of the existing design matrix x0 should be integers within: 1,2,3...,q."
-    elif (any(np.unique(xp, return_counts=True)[1]>n/q)):
+    elif (np.array([v for i in range(xp.shape[1]) for v in np.unique(xp[:,i], return_counts=True)[1]])>n/q):
         return "xp does not follow a balanced design."
 
     crit_list = []
