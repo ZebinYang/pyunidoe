@@ -39,7 +39,13 @@ def DesignQuery(n,s,q,crit="CD2", ShowCrit = True):
 
              "MD2"  --Mixture L2  Discrepancy ;
     """
-    
+    if (isinstance(n,int)&isinstance(s,int)&isinstance(q,int) == False): 
+        return "Wrong types of n,s,q."
+    elif ((n%q) != 0): 
+        return "n should be multiple of q."
+    elif ((s<=1) | (n<=2) | (q <=1)): 
+        return "The size of design should be larger than 2*2."
+
     if (crit=="CD2"): 
         DataX = json.load(open(DATA_PATH+'UD_CD2.json'))
     if (crit=="MD2"): 
@@ -174,7 +180,7 @@ def GenUD(n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,hits_
             return "initX must be a numpy array."
         elif ((n != initX.shape[0]) | (s != initX.shape[1])):
             return "The size of the input design matrix does not match the given n,s."
-        elif ((np.min(initX)<1) | (np.max(initX)>q) | (initX.dtype != np.int) |(q != (np.max(initX) - np.min(initX) + 1))):
+        elif ((1! = (np.min(initX))) | (q! = (np.max(initX))) | (initX.dtype != np.int)):
             return "The values of the input design matrix should be integers within: 1,2,3...,q."
         
     results = SATA_UD(n,s,q,init,initX.tolist(),crit,maxiter,hits_ratio,levelpermt)
@@ -269,6 +275,8 @@ def GenAUD(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,h
         return "The size of the existing design matrix xp does not match the given n,s."
     elif ((xp.dtype != np.int) | (1 > np.min(xp)) | (q < np.max(xp))):
         return "The values of the existing design matrix x0 should be integers within: 1,2,3...,q."
+    elif (any(np.unique(xp, return_counts=True)[1]>n/q)):
+        return "xp does not follow a balanced design, please increase the number of n or remove duplicated elements (per column) in xp."
     elif (init=="input"):
         if ((not isinstance(initX,np.ndarray))):
             return "initX must be a numpy array."
@@ -356,7 +364,7 @@ def GenAUD_COL(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=100
       crit = "CD2"
       res = GenAUD_COL(xp,n,s,q,crit=crit,maxiter=100,vis = True)
     """
-   #check the arguments
+    #check the arguments
     if (isinstance(n,int)&isinstance(s,int)&isinstance(q,int) == False): 
         return "Wrong types of n,s,q."
     elif ((n%q) != 0): 
@@ -369,12 +377,14 @@ def GenAUD_COL(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=100
         return "The size of the existing design matrix xp does not match the given n,s."
     elif ((xp.dtype != np.int)| (1 > np.min(xp)) | (q < np.max(xp)) ):
         return "The values of the existing design matrix x0 should be integers within: 1,2,3...,q."
+    elif (any(np.unique(xp, return_counts=True)[1]>n/q)):
+        return "xp does not follow a balanced design."
     elif (init=="input"):
         if ((not isinstance(initX,np.ndarray))):
             return "initX must be a numpy array."
         elif ((n != initX.shape[0]) | (s <= initX.shape[1])):
             return "The size of the input design matrix does not match the given n,s."
-        elif ((np.min(initX)<1) | (q < np.max(initX)) | (initX.dtype != np.int)):
+        elif ((1 != np.min(initX)) | (q != np.max(initX)) | (initX.dtype != np.int)):
             return "The values of the input design matrix initX should be integers within: 1,2,3...,q."
 
     nvp = xp.shape[1]
@@ -433,6 +443,12 @@ def GenUD_MS(n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
     
     -vis: a boolean object. If true, plot the criterion value sequence.
     """
+    if (isinstance(n,int)&isinstance(s,int)&isinstance(q,int) == False): 
+        return "Wrong types of n,s,q."
+    elif ((n%q) != 0): 
+        return "n should be multiple of q."
+    elif ((s<=1) | (n<=2) | (q <=1)): 
+        return "The size of design should be larger than 2*2."
     
     crit_list = []
     shoot_idx = []
@@ -508,6 +524,20 @@ def GenAUD_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
     
     -vis: a boolean object. If true, plot the criterion value sequence.
     """
+    if (isinstance(n,int)&isinstance(s,int)&isinstance(q,int) == False): 
+        return "Wrong types of n,s,q."
+    elif ((n%q) != 0): 
+        return "n should be multiple of q."
+    elif ((s<=1) | (n<=2) | (q <=1)): 
+        return "The size of design should be larger than 2*2."
+    elif (not isinstance(xp,np.ndarray)):
+        return "xp must be a numpy array."
+    elif ((n <= xp.shape[0]) | (s != xp.shape[1])):
+        return "The size of the existing design matrix xp does not match the given n,s."
+    elif ((xp.dtype != np.int) | (1 > np.min(xp)) | (q < np.max(xp))):
+        return "The values of the existing design matrix x0 should be integers within: 1,2,3...,q."
+    elif (any(np.unique(xp, return_counts=True)[1]>n/q)):
+        return "xp does not follow a balanced design, please increase the number of n or remove duplicated elements (per column) in xp."
     
     crit_list = []
     shoot_idx = []
@@ -583,6 +613,20 @@ def GenAUD_COL_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
     
     -vis: a boolean object. If true, plot the criterion value sequence.
     """
+    if (isinstance(n,int)&isinstance(s,int)&isinstance(q,int) == False): 
+        return "Wrong types of n,s,q."
+    elif ((n%q) != 0): 
+        return "n should be multiple of q."
+    elif ((s<=1) | (n<=2) | (q <=1)): 
+        return "The size of design should be larger than 2*2."
+    elif (not isinstance(xp,np.ndarray)):
+        return "xp must be a numpy array."
+    elif ((n != xp.shape[0]) | (s <= xp.shape[1])):
+        return "The size of the existing design matrix xp does not match the given n,s."
+    elif ((xp.dtype != np.int)| (1 > np.min(xp)) | (q < np.max(xp)) ):
+        return "The values of the existing design matrix x0 should be integers within: 1,2,3...,q."
+    elif (any(np.unique(xp, return_counts=True)[1]>n/q)):
+        return "xp does not follow a balanced design."
 
     crit_list = []
     shoot_idx = []
