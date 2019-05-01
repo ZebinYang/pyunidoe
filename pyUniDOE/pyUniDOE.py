@@ -284,6 +284,8 @@ def GenAUD(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,h
             return "The size of the input design matrix does not match the given n,s."
         elif ((np.min(initX)<1) | (q < np.max(initX)) | (initX.dtype != np.int)):
             return "The values of the input design matrix should be integers within: 1,2,3...,q."
+        elif (any(np.array([v for i in range(initX.shape[1]) for v in np.unique(initX[:,i], return_counts=True)[1]])>n/q)):
+            return "initX does not follow a balanced design."
 
     nnp = xp.shape[0]
     results = SATA_AUD(xp.tolist(),n-nnp,s,q,init,initX.tolist(),crit,maxiter,hits_ratio,levelpermt)
@@ -375,7 +377,7 @@ def GenAUD_COL(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=100
         return "xp must be a numpy array."
     elif ((n != xp.shape[0]) | (s <= xp.shape[1])):
         return "The size of the existing design matrix xp does not match the given n,s."
-    elif ((xp.dtype != np.int)| (1 > np.min(xp)) | (q < np.max(xp)) ):
+    elif ((xp.dtype != np.int)| (1 != np.min(xp)) | (q != np.max(xp)) ):
         return "The values of the existing design matrix x0 should be integers within: 1,2,3...,q."
     elif (any(np.array([v for i in range(xp.shape[1]) for v in np.unique(xp[:,i], return_counts=True)[1]])>n/q)):
         return "xp does not follow a balanced design."
@@ -386,7 +388,9 @@ def GenAUD_COL(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=100
             return "The size of the input design matrix does not match the given n,s."
         elif ((1 != np.min(initX)) | (q != np.max(initX)) | (initX.dtype != np.int)):
             return "The values of the input design matrix initX should be integers within: 1,2,3...,q."
-
+        elif (any(np.array([v for i in range(initX.shape[1]) for v in np.unique(initX[:,i], return_counts=True)[1]])>n/q)):
+            return "initX does not follow a balanced design."
+        
     nvp = xp.shape[1]
     results = SATA_AUD_COL(xp.tolist(), s - nvp, q, init, initX.tolist(), crit, maxiter, hits_ratio, levelpermt)
     stat = {"initial_design": np.array(results.Init_Design, dtype = int), 
@@ -624,7 +628,7 @@ def GenAUD_COL_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
         return "xp must be a numpy array."
     elif ((n != xp.shape[0]) | (s <= xp.shape[1])):
         return "The size of the existing design matrix xp does not match the given n,s."
-    elif ((xp.dtype != np.int)| (1 > np.min(xp)) | (q < np.max(xp)) ):
+    elif ((xp.dtype != np.int)| (1 != np.min(xp)) | (q != np.max(xp)) ):
         return "The values of the existing design matrix x0 should be integers within: 1,2,3...,q."
     elif (any(np.array([v for i in range(xp.shape[1]) for v in np.unique(xp[:,i], return_counts=True)[1]])>n/q)):
         return "xp does not follow a balanced design."
