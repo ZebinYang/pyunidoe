@@ -613,6 +613,7 @@ def GenAUD_COL_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
     
     -vis: a boolean object. If true, plot the criterion value sequence.
     """
+    
     if (isinstance(n,int)&isinstance(s,int)&isinstance(q,int) == False): 
         return "Wrong types of n,s,q."
     elif ((n%q) != 0): 
