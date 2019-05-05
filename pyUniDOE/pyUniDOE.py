@@ -99,7 +99,7 @@ def DesignEval(x, crit="CD2"):
     return CritEval(x.tolist(),nlevel,crit)
 
 
-def GenUD(n,s,q,init="rand",initX=None,crit="CD2",maxiter=100,hits_ratio=0.1,levelpermt=False,rand_seed=0,vis=False):
+def GenUD(n,s,q,init="rand",initX=np.array([[]]),crit="CD2",maxiter=100,hits_ratio=0.1,levelpermt=False,rand_seed=0,vis=False):
     """
     This function takes n,s,q and other arguments to output a list(described below).
 
@@ -209,7 +209,7 @@ def GenUD(n,s,q,init="rand",initX=None,crit="CD2",maxiter=100,hits_ratio=0.1,lev
     return stat
 
 
-def GenAUD(xp,n,s,q,init="rand",initX=None,crit="CD2",maxiter=100,hits_ratio=0.1,levelpermt=False,rand_seed=0,vis=False):
+def GenAUD(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2",maxiter=100,hits_ratio=0.1,levelpermt=False,rand_seed=0,vis=False):
     """
     This function takes n,s,q; a unchanged initial design and other arguments to output a list (described below).
     
@@ -313,7 +313,7 @@ def GenAUD(xp,n,s,q,init="rand",initX=None,crit="CD2",maxiter=100,hits_ratio=0.1
     return stat
 
 
-def GenAUD_COL(xp,n,s,q,init="rand",initX=None,crit="CD2",maxiter=100,hits_ratio=0.1,levelpermt=False,rand_seed=0,vis=False):
+def GenAUD_COL(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2",maxiter=100,hits_ratio=0.1,levelpermt=False,rand_seed=0,vis=False):
         
     """
     This function takes n,s,q; a unchanged initial design and other arguments to output a list (described below). 
