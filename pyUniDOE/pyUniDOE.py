@@ -99,7 +99,7 @@ def DesignEval(x, crit="CD2"):
     return CritEval(x.tolist(),nlevel,crit)
 
 
-def GenUD(n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,hits_ratio = 0.1,levelpermt=False,vis=False):
+def GenUD(n,s,q,init="rand",initX=None,crit="CD2",maxiter=100,hits_ratio=0.1,levelpermt=False,rand_seed=0,vis=False):
     """
     This function takes n,s,q and other arguments to output a list(described below).
 
@@ -185,7 +185,7 @@ def GenUD(n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,hits_
         elif (any(np.array([v for i in range(initX.shape[1]) for v in np.unique(initX[:,i], return_counts=True)[1]])>n/q)):
             return "initX does not follow a balanced design."
 
-    results = SATA_UD(n,s,q,init,initX.tolist(),crit,maxiter,hits_ratio,levelpermt)
+    results = SATA_UD(n,s,q,init,initX.tolist(),crit,maxiter,hits_ratio,levelpermt, rand_seed)
     stat = {"initial_design": np.array(results.Init_Design, dtype = int), 
            "final_design": np.array(results.Final_Design, dtype = int), 
           "initial_criterion": results.Init_Obj, 
@@ -209,7 +209,7 @@ def GenUD(n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,hits_
     return stat
 
 
-def GenAUD(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,hits_ratio = 0.1,levelpermt=False,vis=False):
+def GenAUD(xp,n,s,q,init="rand",initX=None,crit="CD2",maxiter=100,hits_ratio=0.1,levelpermt=False,rand_seed=0,vis=False):
     """
     This function takes n,s,q; a unchanged initial design and other arguments to output a list (described below).
     
@@ -290,7 +290,7 @@ def GenAUD(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,h
             return "initX does not follow a balanced design."
 
     nnp = xp.shape[0]
-    results = SATA_AUD(xp.tolist(),n-nnp,s,q,init,initX.tolist(),crit,maxiter,hits_ratio,levelpermt)
+    results = SATA_AUD(xp.tolist(),n-nnp,s,q,init,initX.tolist(),crit,maxiter,hits_ratio,levelpermt, rand_seed)
     stat = {"initial_design": np.array(results.Init_Design, dtype = int), 
            "final_design": np.array(results.Final_Design, dtype = int), 
           "initial_criterion": results.Init_Obj, 
@@ -313,7 +313,7 @@ def GenAUD(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,h
     return stat
 
 
-def GenAUD_COL(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=10000,hits_ratio = 0.1,levelpermt=False,vis=False):
+def GenAUD_COL(xp,n,s,q,init="rand",initX=None,crit="CD2",maxiter=100,hits_ratio=0.1,levelpermt=False,rand_seed=0,vis=False):
         
     """
     This function takes n,s,q; a unchanged initial design and other arguments to output a list (described below). 
@@ -394,7 +394,7 @@ def GenAUD_COL(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=100
             return "initX does not follow a balanced design."
         
     nvp = xp.shape[1]
-    results = SATA_AUD_COL(xp.tolist(), s - nvp, q, init, initX.tolist(), crit, maxiter, hits_ratio, levelpermt)
+    results = SATA_AUD_COL(xp.tolist(), s - nvp, q, init, initX.tolist(), crit, maxiter, hits_ratio, levelpermt, rand_seed)
     stat = {"initial_design": np.array(results.Init_Design, dtype = int), 
            "final_design": np.array(results.Final_Design, dtype = int), 
           "initial_criterion": results.Init_Obj, 
@@ -417,7 +417,7 @@ def GenAUD_COL(xp,n,s,q,init="rand",initX=np.array([[]]),crit="CD2", maxiter=100
     return stat
 
 
-def GenUD_MS(n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
+def GenUD_MS(n, s, q, crit="CD2", maxiter=100, nshoot = 5, rand_seed = 0, vis=False):
     """
     This function generates Uniform Design of Experiments using diffrent initializations.
     
@@ -461,7 +461,7 @@ def GenUD_MS(n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
     time_list = []
     bestcrit = 1e10
     for i in range(nshoot):
-        stat = GenUD(n=n,s=s,q=q, crit=crit, maxiter = maxiter)
+        stat = GenUD(n=n,s=s,q=q, crit=crit, maxiter = maxiter, rand_seed = rand_seed + nshoot)
         crit_list.append(list(stat["criterion_history"]))
         shoot_idx.append(len(crit_list))
         time_list.append(stat["time_consumed"])
@@ -496,7 +496,7 @@ def GenUD_MS(n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
     return bestdesign
 
 
-def GenAUD_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
+def GenAUD_MS(xp, n, s, q, crit="CD2", maxiter=100, nshoot = 5, rand_seed = 0, vis=False):
     """
     This function generates sequential Uniform Design of Experiments (Augmenting Runs) using diffrent initializations.
     
@@ -550,7 +550,7 @@ def GenAUD_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
     time_list = []
     bestcrit = 1e10
     for i in range(nshoot):
-        stat = GenAUD(xp=xp, n=n,s=s,q=q, crit=crit, maxiter = maxiter)
+        stat = GenAUD(xp=xp, n=n,s=s,q=q, crit=crit, maxiter = maxiter, rand_seed = rand_seed + nshoot)
         crit_list.append(list(stat["criterion_history"]))
         shoot_idx.append(len(crit_list))
         time_list.append(stat["time_consumed"])
@@ -585,7 +585,7 @@ def GenAUD_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
     return bestdesign
 
 
-def GenAUD_COL_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
+def GenAUD_COL_MS(xp, n, s, q, crit="CD2", maxiter=100, nshoot = 5, rand_seed = 0, vis=False):
     """
     This function generates sequential Uniform Design of Experiments (Augmenting Factors) using diffrent initializations.
     
@@ -640,7 +640,7 @@ def GenAUD_COL_MS(xp, n, s, q, crit="CD2", maxiter=30, nshoot = 5, vis=False):
     time_list = []
     bestcrit = 1e10
     for i in range(nshoot):
-        stat = GenAUD_COL(xp=xp, n=n,s=s,q=q, crit=crit, maxiter = maxiter)
+        stat = GenAUD_COL(xp=xp, n=n,s=s,q=q, crit=crit, maxiter = maxiter, rand_seed = rand_seed + nshoot)
         crit_list.append(list(stat["criterion_history"]))
         shoot_idx.append(len(crit_list))
         time_list.append(stat["time_consumed"])

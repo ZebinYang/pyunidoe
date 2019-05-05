@@ -14581,6 +14581,7 @@ SWIGINTERN PyObject *_wrap_SATA_UD(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
   int arg7 ;
   double arg8 ;
   bool arg9 ;
+  int arg10 ;
   int val1 ;
   int ecode1 = 0 ;
   int val2 ;
@@ -14599,6 +14600,8 @@ SWIGINTERN PyObject *_wrap_SATA_UD(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
   int ecode8 = 0 ;
   bool val9 ;
   int ecode9 = 0 ;
+  int val10 ;
+  int ecode10 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -14608,9 +14611,10 @@ SWIGINTERN PyObject *_wrap_SATA_UD(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
   PyObject * obj6 = 0 ;
   PyObject * obj7 = 0 ;
   PyObject * obj8 = 0 ;
+  PyObject * obj9 = 0 ;
   List result;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOO:SATA_UD",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOO:SATA_UD",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9)) SWIG_fail;
   ecode1 = SWIG_AsVal_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SATA_UD" "', argument " "1"" of type '" "int""'");
@@ -14660,7 +14664,12 @@ SWIGINTERN PyObject *_wrap_SATA_UD(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
     SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "SATA_UD" "', argument " "9"" of type '" "bool""'");
   } 
   arg9 = static_cast< bool >(val9);
-  result = SATA_UD(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
+  ecode10 = SWIG_AsVal_int(obj9, &val10);
+  if (!SWIG_IsOK(ecode10)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "SATA_UD" "', argument " "10"" of type '" "int""'");
+  } 
+  arg10 = static_cast< int >(val10);
+  result = SATA_UD(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10);
   resultobj = SWIG_NewPointerObj((new List(static_cast< const List& >(result))), SWIGTYPE_p_List, SWIG_POINTER_OWN |  0 );
   if (alloc4 == SWIG_NEWOBJ) delete[] buf4;
   if (alloc6 == SWIG_NEWOBJ) delete[] buf6;
@@ -14684,6 +14693,7 @@ SWIGINTERN PyObject *_wrap_SATA_AUD(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   int arg8 ;
   double arg9 ;
   bool arg10 ;
+  int arg11 ;
   int val2 ;
   int ecode2 = 0 ;
   int val3 ;
@@ -14702,6 +14712,8 @@ SWIGINTERN PyObject *_wrap_SATA_AUD(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   int ecode9 = 0 ;
   bool val10 ;
   int ecode10 = 0 ;
+  int val11 ;
+  int ecode11 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -14712,9 +14724,10 @@ SWIGINTERN PyObject *_wrap_SATA_AUD(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   PyObject * obj7 = 0 ;
   PyObject * obj8 = 0 ;
   PyObject * obj9 = 0 ;
+  PyObject * obj10 = 0 ;
   List result;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOO:SATA_AUD",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOOO:SATA_AUD",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9,&obj10)) SWIG_fail;
   {
     std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
     int res = swig::asptr(obj0, &ptr);
@@ -14773,7 +14786,12 @@ SWIGINTERN PyObject *_wrap_SATA_AUD(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
     SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "SATA_AUD" "', argument " "10"" of type '" "bool""'");
   } 
   arg10 = static_cast< bool >(val10);
-  result = SATA_AUD(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10);
+  ecode11 = SWIG_AsVal_int(obj10, &val11);
+  if (!SWIG_IsOK(ecode11)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode11), "in method '" "SATA_AUD" "', argument " "11"" of type '" "int""'");
+  } 
+  arg11 = static_cast< int >(val11);
+  result = SATA_AUD(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11);
   resultobj = SWIG_NewPointerObj((new List(static_cast< const List& >(result))), SWIGTYPE_p_List, SWIG_POINTER_OWN |  0 );
   if (alloc5 == SWIG_NEWOBJ) delete[] buf5;
   if (alloc7 == SWIG_NEWOBJ) delete[] buf7;
@@ -14796,6 +14814,7 @@ SWIGINTERN PyObject *_wrap_SATA_AUD_COL(PyObject *SWIGUNUSEDPARM(self), PyObject
   int arg7 ;
   double arg8 ;
   bool arg9 ;
+  int arg10 ;
   int val2 ;
   int ecode2 = 0 ;
   int val3 ;
@@ -14812,6 +14831,8 @@ SWIGINTERN PyObject *_wrap_SATA_AUD_COL(PyObject *SWIGUNUSEDPARM(self), PyObject
   int ecode8 = 0 ;
   bool val9 ;
   int ecode9 = 0 ;
+  int val10 ;
+  int ecode10 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -14821,9 +14842,10 @@ SWIGINTERN PyObject *_wrap_SATA_AUD_COL(PyObject *SWIGUNUSEDPARM(self), PyObject
   PyObject * obj6 = 0 ;
   PyObject * obj7 = 0 ;
   PyObject * obj8 = 0 ;
+  PyObject * obj9 = 0 ;
   List result;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOO:SATA_AUD_COL",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOO:SATA_AUD_COL",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9)) SWIG_fail;
   {
     std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *ptr = (std::vector< std::vector< double,std::allocator< double > >,std::allocator< std::vector< double,std::allocator< double > > > > *)0;
     int res = swig::asptr(obj0, &ptr);
@@ -14877,7 +14899,12 @@ SWIGINTERN PyObject *_wrap_SATA_AUD_COL(PyObject *SWIGUNUSEDPARM(self), PyObject
     SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "SATA_AUD_COL" "', argument " "9"" of type '" "bool""'");
   } 
   arg9 = static_cast< bool >(val9);
-  result = SATA_AUD_COL(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
+  ecode10 = SWIG_AsVal_int(obj9, &val10);
+  if (!SWIG_IsOK(ecode10)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "SATA_AUD_COL" "', argument " "10"" of type '" "int""'");
+  } 
+  arg10 = static_cast< int >(val10);
+  result = SATA_AUD_COL(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10);
   resultobj = SWIG_NewPointerObj((new List(static_cast< const List& >(result))), SWIGTYPE_p_List, SWIG_POINTER_OWN |  0 );
   if (alloc4 == SWIG_NEWOBJ) delete[] buf4;
   if (alloc6 == SWIG_NEWOBJ) delete[] buf6;

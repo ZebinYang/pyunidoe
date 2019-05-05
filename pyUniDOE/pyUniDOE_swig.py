@@ -670,16 +670,16 @@ def CritEval(x0, nlevel, crit):
     return _pyUniDOE_swig.CritEval(x0, nlevel, crit)
 CritEval = _pyUniDOE_swig.CritEval
 
-def SATA_UD(nsamp, nv, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt):
-    return _pyUniDOE_swig.SATA_UD(nsamp, nv, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt)
+def SATA_UD(nsamp, nv, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed):
+    return _pyUniDOE_swig.SATA_UD(nsamp, nv, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed)
 SATA_UD = _pyUniDOE_swig.SATA_UD
 
-def SATA_AUD(xp, nnew, nv, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt):
-    return _pyUniDOE_swig.SATA_AUD(xp, nnew, nv, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt)
+def SATA_AUD(xp, nnew, nv, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed):
+    return _pyUniDOE_swig.SATA_AUD(xp, nnew, nv, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed)
 SATA_AUD = _pyUniDOE_swig.SATA_AUD
 
-def SATA_AUD_COL(xp, nvnew, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt):
-    return _pyUniDOE_swig.SATA_AUD_COL(xp, nvnew, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt)
+def SATA_AUD_COL(xp, nvnew, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed):
+    return _pyUniDOE_swig.SATA_AUD_COL(xp, nvnew, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed)
 SATA_AUD_COL = _pyUniDOE_swig.SATA_AUD_COL
 # This file is compatible with both classic and new-style classes.
 

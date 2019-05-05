@@ -129,7 +129,7 @@ vector<vector<double> > Generate_Aug_matrix(char* init_method, vector< vector < 
 
 
 List SATA_UD(int nsamp, int nv, int nlevel, char* init_method, vector<vector<double> > initX,
-             char* crit, int maxiter, double hits_ratio, bool levelpermt)
+             char* crit, int maxiter, double hits_ratio, bool levelpermt, int rand_seed)
 {
   List lst;
   int i,j;
@@ -143,6 +143,7 @@ List SATA_UD(int nsamp, int nv, int nlevel, char* init_method, vector<vector<dou
   vector<vector<double> > Init_matrix, return_matrix(nsamp, vector<double>(nv, 0));
   vector<vector<double> > x(nsamp, vector<double>(nv, 0));
 
+  srand(rand_seed);
   start_time = clock();
   Init_matrix = Generate_init_matrix(init_method,nsamp,nv,nlevel,initX);
   for(i=0;i<nsamp;i++) for(j=0;j<nv;j++) x[i][j] = Init_matrix[i][j];
@@ -165,7 +166,7 @@ List SATA_UD(int nsamp, int nv, int nlevel, char* init_method, vector<vector<dou
 }
 
 List SATA_AUD(vector<vector<double> > xp,int nnew, int nv, int nlevel, char* init_method, vector<vector<double> > initX,
-              char* crit, int maxiter, double hits_ratio, bool levelpermt)
+              char* crit, int maxiter, double hits_ratio, bool levelpermt, int rand_seed)
 {  
   List lst;
   int i,j;
@@ -182,6 +183,7 @@ List SATA_AUD(vector<vector<double> > xp,int nnew, int nv, int nlevel, char* ini
   vector<vector<double> > Init_matrix(nsamp, vector<double>(nv, 0));
   vector<vector<double> > return_matrix(nsamp, vector<double>(nv, 0));
 
+  srand(rand_seed);
   start_time = clock();
   InputX = Generate_Aug_matrix(init_method,xp,nnew,nv,nlevel,initX);
   for(j=0;j<nv;j++)
@@ -207,7 +209,7 @@ List SATA_AUD(vector<vector<double> > xp,int nnew, int nv, int nlevel, char* ini
 }
 
 List SATA_AUD_COL(vector<vector<double> > xp, int nvnew, int nlevel, char* init_method, vector<vector<double> > initX,
-                  char* crit, int maxiter, double hits_ratio, bool levelpermt)
+                  char* crit, int maxiter, double hits_ratio, bool levelpermt, int rand_seed)
 {
   List lst;
   int i,j;
@@ -225,6 +227,7 @@ List SATA_AUD_COL(vector<vector<double> > xp, int nvnew, int nlevel, char* init_
   vector<vector<double> > Init_matrix(nsamp, vector<double>(nv, 0));
   vector<vector<double> > return_matrix(nsamp, vector<double>(nv, 0));
 
+  srand(rand_seed);
   start_time = clock();
   InputX = Generate_init_matrix(init_method,nsamp,nvnew,nlevel,initX);
   for(j=0;j<nvp;j++) optimize_columns[j] = 0;

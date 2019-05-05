@@ -26,10 +26,10 @@ vector<vector<double> > Generate_Aug_matrix(char* init_method, vector< vector < 
                                   int nlevel, vector< vector < double > > initX);
 double CritEval(vector<vector<double> > x0, int nlevel, char* crit);
 List SATA_UD(int nsamp, int nv, int nlevel, char* init_method, vector<vector<double> > initX,
-             char* crit, int maxiter, double hits_ratio, bool levelpermt);
+             char* crit, int maxiter, double hits_ratio, bool levelpermt, int rand_seed);
 List SATA_AUD(vector<vector<double> > xp,int nnew, int nv, int nlevel, char* init_method, vector<vector<double> > initX,
-              char* crit, int maxiter, double hits_ratio, bool levelpermt);
+              char* crit, int maxiter, double hits_ratio, bool levelpermt, int rand_seed);
 List SATA_AUD_COL(vector<vector<double> > xp, int nvnew, int nlevel, char* init_method, vector<vector<double> > initX,
-                  char* crit, int maxiter, double hits_ratio, bool levelpermt);
+                  char* crit, int maxiter, double hits_ratio, bool levelpermt, int rand_seed);
 
 #endif /* WRAPPER_H__ */
