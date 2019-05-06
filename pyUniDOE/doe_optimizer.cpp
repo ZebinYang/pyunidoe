@@ -109,6 +109,7 @@ Optimizer::Optimizer(vector<vector<double> > x_init, int nnew_init, int np_init,
         if (maxpairs<nlevel_pairs[i]) maxpairs=nlevel_pairs[i];
         if (maxpairs<nelement_pairs[i]) maxpairs=nelement_pairs[i];
     }
+    maxcol = min(max(maxcol, 10), 100);
     //  Initialize the exchange index list
     ind1.assign(maxpairs, 0);
     ind2.assign(maxpairs, 0);
