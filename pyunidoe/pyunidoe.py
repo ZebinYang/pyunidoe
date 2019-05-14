@@ -4,7 +4,7 @@ import pandas as pd
 import pkg_resources
 from seaborn import pairplot
 import matplotlib.pyplot as plt
-from .pyunidoe_swig import CritEval, SATA_UD, SATA_AUD, SATA_AUD_COL
+from .pyUniDOE_swig import CritEval, SATA_UD, SATA_AUD, SATA_AUD_COL
 
 __all__ = ["design_pairs_plot", "design_eval", "design_query", "gen_ud", "gen_aud", "gen_aud_col", "gen_ud_ms", "gen_aud_ms", "gen_aud_col_ms"]
 
@@ -58,8 +58,8 @@ def design_query(n, s, q, crit="CD2", show_crit = True):
         return None
     else:
         D = np.array(np.round(DataX['Design'][idx[0]]), dtype = int)  
-        if(ShowCrit):
-            print("CD2 =", DesignEval(D, "CD2"),"MD2 =", DesignEval(D, "MD2"),"Maximin =", DesignEval(D, "maximin"))
+        if(show_crit):
+            print("CD2 =", design_eval(D, "CD2"),"MD2 =", design_eval(D, "MD2"),"Maximin =", design_eval(D, "maximin"))
     return D
 
 
