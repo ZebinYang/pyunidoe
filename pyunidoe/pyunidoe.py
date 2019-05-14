@@ -4,7 +4,7 @@ import pandas as pd
 import pkg_resources
 from seaborn import pairplot
 import matplotlib.pyplot as plt
-from .pyUniDOE_swig import CritEval, SATA_UD, SATA_AUD, SATA_AUD_COL
+from .pyunidoe_swig import CritEval, SATA_UD, SATA_AUD, SATA_AUD_COL
 
 __all__ = ["design_pairs_plot", "design_eval", "design_query", "gen_ud", "gen_aud", "gen_aud_col", "gen_ud_ms", "gen_aud_ms", "gen_aud_col_ms"]
 
