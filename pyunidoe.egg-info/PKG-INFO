@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: pyunidoe
+Version: 0.1
+Summary: Efficient procedures for constructing uniform design of experiments under various space-filling criteria. It is based on a stochastic and adaptive threshold accepting algorithm with flexible initialization, adaptive threshold, and stochastic evolution. The package may also construct the augmented uniform designs in a sequential manner.
+Home-page: UNKNOWN
+Author: Zebin Yang
+Author-email: yangzb2010@hku.hk
+License: GPL
+Description: UNKNOWN
+Platform: UNKNOWN
