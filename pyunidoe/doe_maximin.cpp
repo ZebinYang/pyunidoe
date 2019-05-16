@@ -11,8 +11,8 @@ void Maximin::init_design(vector<vector<double> > init)
     {
         for(i=0;i<nsamp;i++) for(j=0;j<nv;j++)
             {
-                x[i][j]=(init[i][j]-1)/(nlevel-1);
-//                x[i][j]=(2*init[i][j]-1)/(2*nlevel);
+//                 x[i][j]=(init[i][j]-1)/(nlevel-1);
+               x[i][j]=(2*init[i][j]-1)/(2*nlevel);
             }
     }
 }
@@ -36,8 +36,8 @@ vector<vector<double> > Maximin::get_design()
     {
         for(i=0;i<nsamp;i++)
         {
-            invx[i][j]=x[i][j]*(nlevel-1)+1;
-//            invx[i][j]=x[i][j]*nlevel+0.5;
+//             invx[i][j]=x[i][j]*(nlevel-1)+1;
+           invx[i][j]=x[i][j]*nlevel+0.5;
         }
     }
     return(invx);
