@@ -6,3 +6,4 @@ dist/*
 swig_examples/*
 pyUniDOE/__pycache__/*
 .ipynb_checkpoints/*
+*.pyc
