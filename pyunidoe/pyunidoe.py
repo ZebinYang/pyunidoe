@@ -20,36 +20,48 @@ DATA_PATH = pkg_resources.resource_filename('pyunidoe', 'data/')
 
 
 def design_pairs_plot(x):
+
     """
     This function draws a pairs plot for checking the design.
 
-    Arguments:
+    Parameters
+    ----------
+    :type  x: an integer numpy matrix
+    :param x: representing the design matrix
 
-    -x: an integer matrix object, representing the design matrix.
     """
+
     pairplot(pd.DataFrame(x))
 
 
 def design_query(n, s, q, crit="CD2", show_crit=True):
+
     """
     This function takes size of desired design,criterion crit. If the required design exists in database, then return the design, else return NULL.
 
-    Arguments:
+    Parameters
+    ----------
+    :type  n: an integer object
+    :param n: run of experiments
 
-    -n: an integer object. Run of Experiment.
+    :type  s: an integer object
+    :param s: number of experimental factors
 
-    -s: an integer object. Factor of Experiment.
+    :type  q: an integer object
+    :param q: number of experimental levels for each factor
 
-    -q: an integer object. Level of Experiment.
+    :type  crit: a character object, default="CD2"
+    :param crit: criterion of the query:
 
-    - crit: a character object. Currently, we only support the following two types of criterion:
+             "CD2": Centered L2 Discrepancy;
 
-             "CD2"  --Centered L2 Discrepancy (default) ;
+             "MD2": Mixture L2  Discrepancy.
 
-             "MD2"  --Mixture L2  Discrepancy ;
+    :type  show_crit: boolean
+    :param show_crit: choose to print the criteria value
 
-   - show_crit: boolean. Choose to print the criteria value.
     """
+
     if ((isinstance(n, int) & isinstance(s, int) & isinstance(q, int)) is False):
         raise ValueError("Wrong types of n,s,q.")
     elif ((n % q) != 0):
@@ -75,33 +87,40 @@ def design_query(n, s, q, crit="CD2", show_crit=True):
 
 
 def design_eval(x, crit="CD2"):
+
     """
     This function takes matrix X0,q and crit to output the criterion value.
 
-    Arguments:
-    - x: an integer matrix object. Representing the design to be evaluated.
+    Parameters
+    ----------
+    :type  x: an integer numpy matrix
+    :param x: representing the design matrix:
 
-    - crit: a character object. Type of criterion to use:
+    :type  crit: a character object, default="CD2"
+    :param crit: criterion to be evaluated:
 
-             "CD2"  --Centered L2 Discrepancy (default) ;
+             "CD2"  --Centered L2 Discrepancy;
 
-             "WD2" -- Wrap-around L2 Discrepancy ;
+             "WD2" -- Wrap-around L2 Discrepancy;
 
-             "MD2"  --Mixture L2  Discrepancy ;
+             "MD2"  --Mixture L2  Discrepancy;
 
-             "maximin" -- Maximin Discrepancy ;
+             "maximin" -- Maximin Discrepancy;
 
-             "MC" -- Minimize Coherence ;
+             "MC" -- Minimize Coherence;
 
              "A2" -- Minimize Average Chi-Square.
 
-    Example:
-      x = np.array([[1, 2],
-               [3, 3],
-               [2, 1]])
-      crit = "MD2"
-      obj = design_eval(x,crit)
+    Example
+    -------
+    >>> x = np.array([[1, 2],
+    >>>          [3, 3],
+    >>>          [2, 1]])
+    >>> crit = "MD2"
+    >>> obj = design_eval(x,crit)
+
     """
+
     if (not isinstance(x, np.ndarray)):
         raise ValueError("The design matrix must be a numpy array.")
     elif ((np.min(x) <= 0) | (x.dtype != np.int)):
@@ -112,73 +131,89 @@ def design_eval(x, crit="CD2"):
 
 
 def gen_ud(n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, hits_ratio=0.1, levelpermt=False, rand_seed=0, vis=False):
+
     """
     This function takes n,s,q and other arguments to output a list(described below).
 
-    Arguments:
+    Parameters
+    ----------
+    :type  n: an integer object
+    :param n: run of experiments
 
-    -n: an integer object. Run of Experiment.
+    :type  s: an integer object
+    :param s: number of experimental factors
 
-    -s: an integer object. Factor of Experiment.
+    :type  q: an integer object
+    :param q: number of experimental levels for each factor
 
-    -q: an integer object. Level of Experiment.
+    :type  crit: a character object, default="CD2"
+    :param crit: criterion to be optimized:
 
-    -init: a string vector object. Initialization method for the design:
+             "CD2"  --Centered L2 Discrepancy;
 
-              "rand" --Randomly generate initial design (default);
+             "WD2" -- Wrap-around L2 Discrepancy;
 
-              "input" --User specified.
+             "MD2"  --Mixture L2  Discrepancy;
 
-    -initX: a user-defined numpy integer matrix object. This is the user-defined initial design matrix, and will be used when init="input".
+             "maximin" -- Maximin Discrepancy;
 
-    - crit: a character object. Type of criterion to use:
-
-             "CD2"  --Centered L2 Discrepancy (default) ;
-
-             "WD2" -- Wrap-around L2 Discrepancy ;
-
-             "MD2"  --Mixture L2  Discrepancy ;
-
-             "maximin" -- Maximin Discrepancy ;
-
-             "MC" -- Minimize Coherence ;
+             "MC" -- Minimize Coherence;
 
              "A2" -- Minimize Average Chi-Square.
 
-    -maxiter: a positive integer  object. Maximum iteration number in outer while loop of SATA algorithm.
+    :type  init: a string vector object, default="rand"
+    :param init: initialization method for the design:
 
-    -levelpermt: a boolean object. It controls whether to use level permutation.
+              "rand": randomly generate initial design;
 
-    -hits_ratio: a float object. Default value is 0.1, which is the ratio to accept changes of design in inner for loop.
+              "input": user specified.
 
-    -vis: a boolean object. If true, plot the criterion value sequence.
+    :type  initX: a user-defined numpy integer matrix object, default=np.array([[]])
+    :param initX: This is the user-defined initial design matrix, and will be used when init="input"
 
-    Examples:
-      ## 1
-      n=12 #(must be multiples of q)
-      s=3
-      q=4
-      crit = "CD2"#(Centered L2 criteria)
-      stat = gen_ud(n,s,q,crit=crit,maxiter=100)
+    :type  maxiter: a positive integer object, default=100
+    :param maxiter: maximum iteration number in outer while loop of SATA algorithm.
 
-      ## 2
-      n=10
-      s=3
-      q=5
-      init = "rand"
-      crit = "MD2" #(Mixture L2 criteria)
-      vis=TRUE
-      stat = gen_ud(n,s,q,init=init,crit=crit,maxiter=100,vis=vis)
+    :type  levelpermt: a boolean object, default=False
+    :param levelpermt: it controls whether to use level permutation
 
-      ## 3
-      #If init="input", algorithm will search for better a better design with same size as initX (balanced design).
-      n=3
-      s=2
-      q=3
-      initX = np.array([[1, 1],
-                  [2, 2],
-                  [3, 3]])
-      stat = gen_ud(n,s,q, init="input", initX = initX, maxiter=100)
+    :type  hits_ratio: a float object, default=0.1
+    :param hits_ratio: Default value is 0.1, which is the ratio to accept changes of design in inner for loop
+
+    :type  rand_seed: an integer object, default=0
+    :param rand_seed: random seed
+
+    :type vis: a boolean object, default=False
+    :param vis: if true, plot the criterion value sequence
+
+    Examples
+    ---------
+    >>> ## 1
+    >>> n=12 #(must be multiples of q)
+    >>> s=3
+    >>> q=4
+    >>> crit = "CD2"#(Centered L2 criteria)
+    >>> stat = gen_ud(n,s,q,crit=crit,maxiter=100)
+
+    ## 2
+    >>>  n=10
+    >>>  s=3
+    >>>  q=5
+    >>>  init = "rand"
+    >>>  crit = "MD2" #(Mixture L2 criteria)
+    >>>  vis=TRUE
+    >>>  stat = gen_ud(n,s,q,init=init,crit=crit,maxiter=100,vis=vis)
+
+    ## 3
+    >>>  #If init="input", algorithm will search for better a better design with same size as initX (balanced design).
+    >>>  n=3
+    >>>  s=2
+    >>>  q=3
+    >>>  initX = np.array([[1, 1],
+    >>>              [2, 2],
+    >>>              [3, 3]])
+    >>>  stat = gen_ud(n,s,q, init="input", initX = initX, maxiter=100)
+
     """
 
     # check the arguments
@@ -225,58 +260,75 @@ def gen_ud(n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, 
 
 
 def gen_aud(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, hits_ratio=0.1, levelpermt=False, rand_seed=0, vis=False):
+
     """
     This function takes n,s,q; a unchanged initial design and other arguments to output a list (described below).
 
-    Arguments:
+    Parameters
+    ----------
+    :type  xp: a numpy integer matrix object
+    :param xp: representing the previous existing design matrix
 
-    -xp: a numpy integer matrix object. Representing the previous existing design matrix.
+    :type  n: an integer object
+    :param n: run of experiments, including the previous design in xp
 
-    -n: an integer object. Run of Experiment (including the previous design xp).
+    :type  s: an integer object
+    :param s: number of experimental factors
 
-    -s: an integer object. Factor of Experiment.
+    :type  q: an integer object
+    :param q: number of experimental levels for each factor
 
-    -q: an integer object. Level of Experiment.
+    :type  crit: a character object, default="CD2"
+    :param crit: criterion to be optimized:
 
-    -init: a string vector object. Initialization method for the run-augmented design:
+             "CD2"  --Centered L2 Discrepancy;
 
-              "rand" --Randomly generate initial design (default);
+             "WD2" -- Wrap-around L2 Discrepancy;
 
-              "input" --User specified.
+             "MD2"  --Mixture L2  Discrepancy;
 
-    -initX: a user-defined numpy integer matrix object. This is the user-defined initial augmentation matrix, and will be used when init="input".
+             "maximin" -- Maximin Discrepancy;
 
-    - crit: a character object. Type of criterion to use:
-
-             "CD2"  --Centered L2 Discrepancy (default) ;
-
-             "WD2" -- Wrap-around L2 Discrepancy ;
-
-             "MD2"  --Mixture L2  Discrepancy ;
-
-             "maximin" -- Maximin Discrepancy ;
-
-             "MC" -- Minimize Coherence ;
+             "MC" -- Minimize Coherence;
 
              "A2" -- Minimize Average Chi-Square.
 
-    -maxiter: a positive integer  object. Maximum iteration number in outer while loop of SATA algorithm.
+    :type  init: a string vector object, default="rand"
+    :param init: initialization method for the run-augmented design:
 
-    -levelpermt: a boolean object. It controls whether to use level permutation.
+              "rand": randomly generate initial design;
 
-    -hits_ratio: a float object. Default value is 0.1, which is the ratio to accept changes of design in inner for loop.
+              "input": user specified.
 
-    -vis: a boolean object. If true, plot the criterion value sequence.
+    :type  initX: a user-defined numpy integer matrix object, default=np.array([[]])
+    :param initX: This is the user-defined initial design matrix, and will be used when init="input"
 
-    Examples:
-      n=6
-      s=2
-      q=3
-      xp = np.array([[1, 1],
-                [2, 2],
-                [3, 3]])
-      crit = "CD2"
-      res = gen_aud(xp,n,s,q,crit=crit,maxiter=100,vis = True)
+    :type  maxiter: a positive integer object, default=100
+    :param maxiter: maximum iteration number in outer while loop of SATA algorithm.
+
+    :type  levelpermt: a boolean object, default=False
+    :param levelpermt: it controls whether to use level permutation
+
+    :type  hits_ratio: a float object, default=0.1
+    :param hits_ratio: Default value is 0.1, which is the ratio to accept changes of design in inner for loop
+
+    :type  rand_seed: an integer object, default=0
+    :param rand_seed: random seed
+
+    :type vis: a boolean object, default=False
+    :param vis: if true, plot the criterion value sequence
+
+    Example
+    -------
+    >>> n=6
+    >>> s=2
+    >>> q=3
+    >>> xp = np.array([[1, 1],
+    >>>           [2, 2],
+    >>>           [3, 3]])
+    >>> crit = "CD2"
+    >>> res = gen_aud(xp,n,s,q,crit=crit,maxiter=100,vis = True)
+
     """
 
     # check the arguments
@@ -335,55 +387,71 @@ def gen_aud_col(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxi
     """
     This function takes n,s,q; a unchanged initial design and other arguments to output a list (described below).
 
-    Arguments:
+    Parameters
+    ----------
+    :type  xp: a numpy integer matrix object
+    :param xp: representing the previous existing design matrix
 
-    -xp: a numpy integer matrix object, representing the previous existing design matrix.
+    :type  n: an integer object
+    :param n: run of experiments
 
-    -n: an integer object. Run of Experiment.
+    :type  s: an integer object
+    :param s: number of experimental factors, including the previous design in xp
 
-    -s: an integer object. Factor of Experiment (including the number of factors in previous design xp).
+    :type  q: an integer object
+    :param q: number of experimental levels for each factor
 
-    -q: an integer object. Level of Experiment.
+    :type  crit: a character object, default="CD2"
+    :param crit: criterion to be optimized:
 
-    -init: a string vector object. Initialization method for the run-augmented design:
+             "CD2"  --Centered L2 Discrepancy;
 
-              "rand" --Randomly generate initial design (default);
+             "WD2" -- Wrap-around L2 Discrepancy;
 
-              "input" --User specified.
+             "MD2"  --Mixture L2  Discrepancy;
 
-    -initX: a user-defined numpy integer matrix object. This is the user-defined initial augmentation matrix, and will be used when init="input".
+             "maximin" -- Maximin Discrepancy;
 
-    - crit: a character object. Type of criterion to use:
-
-             "CD2"  --Centered L2 Discrepancy (default) ;
-
-             "WD2" -- Wrap-around L2 Discrepancy ;
-
-             "MD2"  --Mixture L2  Discrepancy ;
-
-             "maximin" -- Maximin Discrepancy ;
-
-             "MC" -- Minimize Coherence ;
+             "MC" -- Minimize Coherence;
 
              "A2" -- Minimize Average Chi-Square.
 
-    -maxiter: a positive integer  object. Maximum iteration number in outer while loop of SATA algorithm.
+    :type  init: a string vector object, default="rand"
+    :param init: initialization method for the factor-augmented design:
 
-    -levelpermt: a boolean object. It controls whether to use level permutation.
+              "rand": randomly generate initial design;
 
-    -hits_ratio: a float object. Default value is 0.1, which is the ratio to accept changes of design in inner for loop.
+              "input": user specified.
 
-    -vis: a boolean object. If true, plot the criterion value sequence.
+    :type  initX: a user-defined numpy integer matrix object, default=np.array([[]])
+    :param initX: This is the user-defined initial design matrix, and will be used when init="input"
 
-    Examples:
-      n=3
-      s=4
-      q=3
-      xp = np.array([[1, 1],
-                [2, 2],
-                [3, 3]])
-      crit = "CD2"
-      res = gen_aud_col(xp,n,s,q,crit=crit,maxiter=100,vis = True)
+    :type  maxiter: a positive integer object, default=100
+    :param maxiter: maximum iteration number in outer while loop of SATA algorithm.
+
+    :type  levelpermt: a boolean object, default=False
+    :param levelpermt: it controls whether to use level permutation
+
+    :type  hits_ratio: a float object, default=0.1
+    :param hits_ratio: Default value is 0.1, which is the ratio to accept changes of design in inner for loop
+
+    :type  rand_seed: an integer object, default=0
+    :param rand_seed: random seed
+
+    :type vis: a boolean object, default=False
+    :param vis: if true, plot the criterion value sequence
+
+    Example
+    --------
+    >>> n=3
+    >>> s=4
+    >>> q=3
+    >>> xp = np.array([[1, 1],
+    >>>           [2, 2],
+    >>>           [3, 3]])
+    >>> crit = "CD2"
+    >>> res = gen_aud_col(xp,n,s,q,crit=crit,maxiter=100,vis = True)
+
     """
 
     # check the arguments
@@ -438,37 +506,59 @@ def gen_aud_col(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxi
 
 
 def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=False):
+
     """
     This function generates Uniform Design of Experiments using diffrent initializations.
 
-    Arguments:
+    Parameters
+    ----------
+    :type  xp: a numpy integer matrix object
+    :param xp: representing the previous existing design matrix
 
-    -n: an integer object. Run of Experiment.
+    :type  n: an integer object
+    :param n: run of experiments
 
-    -s: an integer object. Factor of Experiment (including the number of factors in previous design xp).
+    :type  s: an integer object
+    :param s: number of experimental factors
 
-    -q: an integer object. Level of Experiment.
+    :type  q: an integer object
+    :param q: number of experimental levels for each factor
 
-    - crit: a character object. Type of criterion to use:
+    :type  crit: a character object, default="CD2"
+    :param crit: criterion to be optimized:
 
-             "CD2"  --Centered L2 Discrepancy (default) ;
+             "CD2"  --Centered L2 Discrepancy;
 
-             "WD2" -- Wrap-around L2 Discrepancy ;
+             "WD2" -- Wrap-around L2 Discrepancy;
 
-             "MD2"  --Mixture L2  Discrepancy ;
+             "MD2"  --Mixture L2  Discrepancy;
 
-             "maximin" -- Maximin Discrepancy ;
+             "maximin" -- Maximin Discrepancy;
 
-             "MC" -- Minimize Coherence ;
+             "MC" -- Minimize Coherence;
 
              "A2" -- Minimize Average Chi-Square.
 
-    -maxiter: a positive integer  object. Maximum iteration number in outer while loop of SATA algorithm.
+    :type  maxiter: a positive integer object, default=100
+    :param maxiter: maximum iteration number in outer while loop of SATA algorithm.
 
-    -nshoot: Total counts to try different initial designs.
+    :type  nshoot: a positive integer object, default=5
+    :param nshoot: total counts to try different initial designs
 
-    -vis: a boolean object. If true, plot the criterion value sequence.
+    :type  rand_seed: an integer object, default=0
+    :param rand_seed: random seed
+
+    :type  hits_ratio: a float object, default=0.1
+    :param hits_ratio: Default value is 0.1, which is the ratio to accept changes of design in inner for loop
+
+    :type  rand_seed: an integer object, default=0
+    :param rand_seed: random seed
+
+    :type vis: a boolean object, default=False
+    :param vis: if true, plot the criterion value sequence
+
     """
+
     if ((isinstance(n, int) & isinstance(s, int) & isinstance(q, int)) is False):
         raise ValueError("Wrong types of n,s,q.")
     elif ((n % q) != 0):
@@ -523,36 +613,55 @@ def gen_aud_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=
     """
     This function generates sequential Uniform Design of Experiments (Augmenting Runs) using diffrent initializations.
 
-    Arguments:
+    Parameters
+    ----------
+    :type  xp: a numpy integer matrix object
+    :param xp: representing the previous existing design matrix
 
-    -xp: a numpy integer matrix object, representing the previous existing design matrix.
+    :type  n: an integer object
+    :param n: run of experiments, including the previous design in xp
 
-    -n: an integer object. Run of Experiment.
+    :type  s: an integer object
+    :param s: number of experimental factors
 
-    -s: an integer object. Factor of Experiment (including the number of factors in previous design xp).
+    :type  q: an integer object
+    :param q: number of experimental levels for each factor
 
-    -q: an integer object. Level of Experiment.
+    :type  crit: a character object, default="CD2"
+    :param crit: criterion to be optimized:
 
-    - crit: a character object. Type of criterion to use:
+             "CD2"  --Centered L2 Discrepancy;
 
-             "CD2"  --Centered L2 Discrepancy (default) ;
+             "WD2" -- Wrap-around L2 Discrepancy;
 
-             "WD2" -- Wrap-around L2 Discrepancy ;
+             "MD2"  --Mixture L2  Discrepancy;
 
-             "MD2"  --Mixture L2  Discrepancy ;
+             "maximin" -- Maximin Discrepancy;
 
-             "maximin" -- Maximin Discrepancy ;
-
-             "MC" -- Minimize Coherence ;
+             "MC" -- Minimize Coherence;
 
              "A2" -- Minimize Average Chi-Square.
 
-    -maxiter: a positive integer  object. Maximum iteration number in outer while loop of SATA algorithm.
+    :type  maxiter: a positive integer object, default=100
+    :param maxiter: maximum iteration number in outer while loop of SATA algorithm.
 
-    -nshoot: Total counts to try different initial designs.
+    :type  nshoot: a positive integer object, default=5
+    :param nshoot: total counts to try different initial designs
 
-    -vis: a boolean object. If true, plot the criterion value sequence.
+    :type  rand_seed: an integer object, default=0
+    :param rand_seed: random seed
+
+    :type  hits_ratio: a float object, default=0.1
+    :param hits_ratio: Default value is 0.1, which is the ratio to accept changes of design in inner for loop
+
+    :type  rand_seed: an integer object, default=0
+    :param rand_seed: random seed
+
+    :type vis: a boolean object, default=False
+    :param vis: if true, plot the criterion value sequence
+
     """
+
     if ((isinstance(n, int) & isinstance(s, int) & isinstance(q, int)) is False):
         raise ValueError("Wrong types of n,s,q.")
     elif ((n % q) != 0):
@@ -615,35 +724,53 @@ def gen_aud_col_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, 
     """
     This function generates sequential Uniform Design of Experiments (Augmenting Factors) using diffrent initializations.
 
-    Arguments:
+    Parameters
+    ----------
+    :type  xp: a numpy integer matrix object
+    :param xp: representing the previous existing design matrix
 
-    -xp: a numpy integer matrix object, representing the previous existing design matrix.
+    :type  n: an integer object
+    :param n: run of experiments
 
-    -n: an integer object. Run of Experiment.
+    :type  s: an integer object
+    :param s: number of experimental factors, including the number of factors in previous design xp
 
-    -s: an integer object. Factor of Experiment (including the number of factors in previous design xp).
+    :type  q: an integer object
+    :param q: number of experimental levels for each factor
 
-    -q: an integer object. Level of Experiment.
+    :type  crit: a character object, default="CD2"
+    :param crit: criterion to be optimized:
 
-    - crit: a character object. Type of criterion to use:
+             "CD2"  --Centered L2 Discrepancy;
 
-             "CD2"  --Centered L2 Discrepancy (default) ;
+             "WD2" -- Wrap-around L2 Discrepancy;
 
-             "WD2" -- Wrap-around L2 Discrepancy ;
+             "MD2"  --Mixture L2  Discrepancy;
 
-             "MD2"  --Mixture L2  Discrepancy ;
+             "maximin" -- Maximin Discrepancy;
 
-             "maximin" -- Maximin Discrepancy ;
-
-             "MC" -- Minimize Coherence ;
+             "MC" -- Minimize Coherence;
 
              "A2" -- Minimize Average Chi-Square.
 
-    -maxiter: a positive integer  object. Maximum iteration number in outer while loop of SATA algorithm.
+    :type  maxiter: a positive integer object, default=100
+    :param maxiter: maximum iteration number in outer while loop of SATA algorithm.
 
-    -nshoot: Total counts to try different initial designs.
+    :type  nshoot: a positive integer object, default=5
+    :param nshoot: total counts to try different initial designs
 
-    -vis: a boolean object. If true, plot the criterion value sequence.
+    :type  rand_seed: an integer object, default=0
+    :param rand_seed: random seed
+
+    :type  hits_ratio: a float object, default=0.1
+    :param hits_ratio: Default value is 0.1, which is the ratio to accept changes of design in inner for loop
+
+    :type  rand_seed: an integer object, default=0
+    :param rand_seed: random seed
+
+    :type vis: a boolean object, default=False
+    :param vis: if true, plot the criterion value sequence
+
     """
 
     if ((isinstance(n, int) & isinstance(s, int) & isinstance(q, int)) is False):
