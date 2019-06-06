@@ -35,7 +35,6 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="pyunidoe" href="apidoc.html" />
     <link rel="prev" title="Examples" href="examples.html" /> 
 </head>
 
@@ -84,7 +83,7 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Modules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="apidoc.html">pyunidoe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyunidoe.pyunidoe">APIs</a></li>
 </ul>
 </li>
 </ul>
@@ -155,10 +154,303 @@
             
   <div class="section" id="modules">
 <h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="apidoc.html">pyunidoe</a></li>
+<div class="section" id="module-pyunidoe.pyunidoe">
+<span id="apis"></span><h2>APIs<a class="headerlink" href="#module-pyunidoe.pyunidoe" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pyunidoe.pyunidoe.design_pairs_plot">
+<code class="descclassname">pyunidoe.pyunidoe.</code><code class="descname">design_pairs_plot</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyunidoe/pyunidoe.html#design_pairs_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyunidoe.pyunidoe.design_pairs_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function draws a pairs plot for checking the design.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>an integer numpy matrix</em>) – representing the design matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyunidoe.pyunidoe.design_eval">
+<code class="descclassname">pyunidoe.pyunidoe.</code><code class="descname">design_eval</code><span class="sig-paren">(</span><em>x</em>, <em>crit='CD2'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyunidoe/pyunidoe.html#design_eval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyunidoe.pyunidoe.design_eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes matrix X0,q and crit to output the criterion value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>an integer numpy matrix</em>) – representing the design matrix:</p></li>
+<li><p><strong>crit</strong> (<em>a character object</em><em>, </em><em>default=&quot;CD2&quot;</em>) – <p>criterion to be evaluated:</p>
+<p>”CD2”  –Centered L2 Discrepancy;</p>
+<p>”WD2” – Wrap-around L2 Discrepancy;</p>
+<p>”MD2”  –Mixture L2  Discrepancy;</p>
+<p>”maximin” – Maximin Discrepancy;</p>
+<p>”MC” – Minimize Coherence;</p>
+<p>”A2” – Minimize Average Chi-Square.</p>
+</p></li>
 </ul>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="gp">&gt;&gt;&gt; </span>         <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+<span class="gp">&gt;&gt;&gt; </span>         <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crit</span> <span class="o">=</span> <span class="s2">&quot;MD2&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">design_eval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">crit</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyunidoe.pyunidoe.design_query">
+<code class="descclassname">pyunidoe.pyunidoe.</code><code class="descname">design_query</code><span class="sig-paren">(</span><em>n</em>, <em>s</em>, <em>q</em>, <em>crit='CD2'</em>, <em>show_crit=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyunidoe/pyunidoe.html#design_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyunidoe.pyunidoe.design_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes size of desired design,criterion crit. If the required design exists in database, then return the design, else return NULL.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>an integer object</em>) – run of experiments</p></li>
+<li><p><strong>s</strong> (<em>an integer object</em>) – number of experimental factors</p></li>
+<li><p><strong>q</strong> (<em>an integer object</em>) – number of experimental levels for each factor</p></li>
+<li><p><strong>crit</strong> (<em>a character object</em><em>, </em><em>default=&quot;CD2&quot;</em>) – <p>criterion of the query:</p>
+<p>”CD2”: Centered L2 Discrepancy;</p>
+<p>”MD2”: Mixture L2  Discrepancy.</p>
+</p></li>
+<li><p><strong>show_crit</strong> (<em>boolean</em>) – choose to print the criteria value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyunidoe.pyunidoe.gen_ud">
+<code class="descclassname">pyunidoe.pyunidoe.</code><code class="descname">gen_ud</code><span class="sig-paren">(</span><em>n</em>, <em>s</em>, <em>q</em>, <em>init='rand'</em>, <em>initX=array([]</em>, <em>shape=(1</em>, <em>0)</em>, <em>dtype=float64)</em>, <em>crit='CD2'</em>, <em>maxiter=100</em>, <em>hits_ratio=0.1</em>, <em>levelpermt=False</em>, <em>rand_seed=0</em>, <em>vis=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyunidoe/pyunidoe.html#gen_ud"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyunidoe.pyunidoe.gen_ud" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes n,s,q and other arguments to output a list(described below).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>an integer object</em>) – run of experiments</p></li>
+<li><p><strong>s</strong> (<em>an integer object</em>) – number of experimental factors</p></li>
+<li><p><strong>q</strong> (<em>an integer object</em>) – number of experimental levels for each factor</p></li>
+<li><p><strong>crit</strong> (<em>a character object</em><em>, </em><em>default=&quot;CD2&quot;</em>) – <p>criterion to be optimized:</p>
+<p>”CD2”  –Centered L2 Discrepancy;</p>
+<p>”WD2” – Wrap-around L2 Discrepancy;</p>
+<p>”MD2”  –Mixture L2  Discrepancy;</p>
+<p>”maximin” – Maximin Discrepancy;</p>
+<p>”MC” – Minimize Coherence;</p>
+<p>”A2” – Minimize Average Chi-Square.</p>
+</p></li>
+<li><p><strong>init</strong> (<em>a string vector object</em><em>, </em><em>default=&quot;rand&quot;</em>) – <p>initialization method for the design:</p>
+<p>”rand”: randomly generate initial design;</p>
+<p>”input”: user specified.</p>
+</p></li>
+<li><p><strong>initX</strong> (<em>a user-defined numpy integer matrix object</em><em>, </em><em>default=np.array</em><em>(</em><em>[</em><em>[</em><em>]</em><em>]</em><em>)</em>) – This is the user-defined initial design matrix, and will be used when init=”input”</p></li>
+<li><p><strong>maxiter</strong> (<em>a positive integer object</em><em>, </em><em>default=100</em>) – maximum iteration number in outer while loop of SATA algorithm.</p></li>
+<li><p><strong>levelpermt</strong> (<em>a boolean object</em><em>, </em><em>default=False</em>) – it controls whether to use level permutation</p></li>
+<li><p><strong>hits_ratio</strong> (<em>a float object</em><em>, </em><em>default=0.1</em>) – Default value is 0.1, which is the ratio to accept changes of design in inner for loop</p></li>
+<li><p><strong>rand_seed</strong> (<em>an integer object</em><em>, </em><em>default=0</em>) – random seed</p></li>
+<li><p><strong>vis</strong> (<em>a boolean object</em><em>, </em><em>default=False</em>) – if true, plot the criterion value sequence</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">## 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">=</span><span class="mi">12</span> <span class="c1">#(must be multiples of q)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">=</span><span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">=</span><span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crit</span> <span class="o">=</span> <span class="s2">&quot;CD2&quot;</span><span class="c1">#(Centered L2 criteria)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stat</span> <span class="o">=</span> <span class="n">gen_ud</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">q</span><span class="p">,</span><span class="n">crit</span><span class="o">=</span><span class="n">crit</span><span class="p">,</span><span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>## 2
+&gt;&gt;&gt;  n=10
+&gt;&gt;&gt;  s=3
+&gt;&gt;&gt;  q=5
+&gt;&gt;&gt;  init = “rand”
+&gt;&gt;&gt;  crit = “MD2” #(Mixture L2 criteria)
+&gt;&gt;&gt;  vis=TRUE
+&gt;&gt;&gt;  stat = gen_ud(n,s,q,init=init,crit=crit,maxiter=100,vis=vis)</p>
+<p>## 3
+&gt;&gt;&gt;  #If init=”input”, algorithm will search for better a better design with same size as initX (balanced design).
+&gt;&gt;&gt;  n=3
+&gt;&gt;&gt;  s=2
+&gt;&gt;&gt;  q=3
+&gt;&gt;&gt;  initX = np.array([[1, 1],
+&gt;&gt;&gt;              [2, 2],
+&gt;&gt;&gt;              [3, 3]])
+&gt;&gt;&gt;  stat = gen_ud(n,s,q, init=”input”, initX = initX, maxiter=100)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyunidoe.pyunidoe.gen_aud">
+<code class="descclassname">pyunidoe.pyunidoe.</code><code class="descname">gen_aud</code><span class="sig-paren">(</span><em>xp</em>, <em>n</em>, <em>s</em>, <em>q</em>, <em>init='rand'</em>, <em>initX=array([]</em>, <em>shape=(1</em>, <em>0)</em>, <em>dtype=float64)</em>, <em>crit='CD2'</em>, <em>maxiter=100</em>, <em>hits_ratio=0.1</em>, <em>levelpermt=False</em>, <em>rand_seed=0</em>, <em>vis=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyunidoe/pyunidoe.html#gen_aud"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyunidoe.pyunidoe.gen_aud" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes n,s,q; a unchanged initial design and other arguments to output a list (described below).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>a numpy integer matrix object</em>) – representing the previous existing design matrix</p></li>
+<li><p><strong>n</strong> (<em>an integer object</em>) – run of experiments, including the previous design in xp</p></li>
+<li><p><strong>s</strong> (<em>an integer object</em>) – number of experimental factors</p></li>
+<li><p><strong>q</strong> (<em>an integer object</em>) – number of experimental levels for each factor</p></li>
+<li><p><strong>crit</strong> (<em>a character object</em><em>, </em><em>default=&quot;CD2&quot;</em>) – <p>criterion to be optimized:</p>
+<p>”CD2”  –Centered L2 Discrepancy;</p>
+<p>”WD2” – Wrap-around L2 Discrepancy;</p>
+<p>”MD2”  –Mixture L2  Discrepancy;</p>
+<p>”maximin” – Maximin Discrepancy;</p>
+<p>”MC” – Minimize Coherence;</p>
+<p>”A2” – Minimize Average Chi-Square.</p>
+</p></li>
+<li><p><strong>init</strong> (<em>a string vector object</em><em>, </em><em>default=&quot;rand&quot;</em>) – <p>initialization method for the run-augmented design:</p>
+<p>”rand”: randomly generate initial design;</p>
+<p>”input”: user specified.</p>
+</p></li>
+<li><p><strong>initX</strong> (<em>a user-defined numpy integer matrix object</em><em>, </em><em>default=np.array</em><em>(</em><em>[</em><em>[</em><em>]</em><em>]</em><em>)</em>) – This is the user-defined initial design matrix, and will be used when init=”input”</p></li>
+<li><p><strong>maxiter</strong> (<em>a positive integer object</em><em>, </em><em>default=100</em>) – maximum iteration number in outer while loop of SATA algorithm.</p></li>
+<li><p><strong>levelpermt</strong> (<em>a boolean object</em><em>, </em><em>default=False</em>) – it controls whether to use level permutation</p></li>
+<li><p><strong>hits_ratio</strong> (<em>a float object</em><em>, </em><em>default=0.1</em>) – Default value is 0.1, which is the ratio to accept changes of design in inner for loop</p></li>
+<li><p><strong>rand_seed</strong> (<em>an integer object</em><em>, </em><em>default=0</em>) – random seed</p></li>
+<li><p><strong>vis</strong> (<em>a boolean object</em><em>, </em><em>default=False</em>) – if true, plot the criterion value sequence</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">=</span><span class="mi">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">=</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">=</span><span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="gp">&gt;&gt;&gt; </span>          <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="gp">&gt;&gt;&gt; </span>          <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crit</span> <span class="o">=</span> <span class="s2">&quot;CD2&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="n">gen_aud</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">q</span><span class="p">,</span><span class="n">crit</span><span class="o">=</span><span class="n">crit</span><span class="p">,</span><span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">vis</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyunidoe.pyunidoe.gen_aud_col">
+<code class="descclassname">pyunidoe.pyunidoe.</code><code class="descname">gen_aud_col</code><span class="sig-paren">(</span><em>xp</em>, <em>n</em>, <em>s</em>, <em>q</em>, <em>init='rand'</em>, <em>initX=array([]</em>, <em>shape=(1</em>, <em>0)</em>, <em>dtype=float64)</em>, <em>crit='CD2'</em>, <em>maxiter=100</em>, <em>hits_ratio=0.1</em>, <em>levelpermt=False</em>, <em>rand_seed=0</em>, <em>vis=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyunidoe/pyunidoe.html#gen_aud_col"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyunidoe.pyunidoe.gen_aud_col" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes n,s,q; a unchanged initial design and other arguments to output a list (described below).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>a numpy integer matrix object</em>) – representing the previous existing design matrix</p></li>
+<li><p><strong>n</strong> (<em>an integer object</em>) – run of experiments</p></li>
+<li><p><strong>s</strong> (<em>an integer object</em>) – number of experimental factors, including the previous design in xp</p></li>
+<li><p><strong>q</strong> (<em>an integer object</em>) – number of experimental levels for each factor</p></li>
+<li><p><strong>crit</strong> (<em>a character object</em><em>, </em><em>default=&quot;CD2&quot;</em>) – <p>criterion to be optimized:</p>
+<p>”CD2”  –Centered L2 Discrepancy;</p>
+<p>”WD2” – Wrap-around L2 Discrepancy;</p>
+<p>”MD2”  –Mixture L2  Discrepancy;</p>
+<p>”maximin” – Maximin Discrepancy;</p>
+<p>”MC” – Minimize Coherence;</p>
+<p>”A2” – Minimize Average Chi-Square.</p>
+</p></li>
+<li><p><strong>init</strong> (<em>a string vector object</em><em>, </em><em>default=&quot;rand&quot;</em>) – <p>initialization method for the factor-augmented design:</p>
+<p>”rand”: randomly generate initial design;</p>
+<p>”input”: user specified.</p>
+</p></li>
+<li><p><strong>initX</strong> (<em>a user-defined numpy integer matrix object</em><em>, </em><em>default=np.array</em><em>(</em><em>[</em><em>[</em><em>]</em><em>]</em><em>)</em>) – This is the user-defined initial design matrix, and will be used when init=”input”</p></li>
+<li><p><strong>maxiter</strong> (<em>a positive integer object</em><em>, </em><em>default=100</em>) – maximum iteration number in outer while loop of SATA algorithm.</p></li>
+<li><p><strong>levelpermt</strong> (<em>a boolean object</em><em>, </em><em>default=False</em>) – it controls whether to use level permutation</p></li>
+<li><p><strong>hits_ratio</strong> (<em>a float object</em><em>, </em><em>default=0.1</em>) – Default value is 0.1, which is the ratio to accept changes of design in inner for loop</p></li>
+<li><p><strong>rand_seed</strong> (<em>an integer object</em><em>, </em><em>default=0</em>) – random seed</p></li>
+<li><p><strong>vis</strong> (<em>a boolean object</em><em>, </em><em>default=False</em>) – if true, plot the criterion value sequence</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">=</span><span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">=</span><span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">=</span><span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="gp">&gt;&gt;&gt; </span>          <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="gp">&gt;&gt;&gt; </span>          <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crit</span> <span class="o">=</span> <span class="s2">&quot;CD2&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="n">gen_aud_col</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">q</span><span class="p">,</span><span class="n">crit</span><span class="o">=</span><span class="n">crit</span><span class="p">,</span><span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">vis</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyunidoe.pyunidoe.gen_ud_ms">
+<code class="descclassname">pyunidoe.pyunidoe.</code><code class="descname">gen_ud_ms</code><span class="sig-paren">(</span><em>n</em>, <em>s</em>, <em>q</em>, <em>crit='CD2'</em>, <em>maxiter=100</em>, <em>nshoot=5</em>, <em>rand_seed=0</em>, <em>vis=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyunidoe/pyunidoe.html#gen_ud_ms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyunidoe.pyunidoe.gen_ud_ms" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function generates Uniform Design of Experiments using diffrent initializations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>a numpy integer matrix object</em>) – representing the previous existing design matrix</p></li>
+<li><p><strong>n</strong> (<em>an integer object</em>) – run of experiments</p></li>
+<li><p><strong>s</strong> (<em>an integer object</em>) – number of experimental factors</p></li>
+<li><p><strong>q</strong> (<em>an integer object</em>) – number of experimental levels for each factor</p></li>
+<li><p><strong>crit</strong> (<em>a character object</em><em>, </em><em>default=&quot;CD2&quot;</em>) – <p>criterion to be optimized:</p>
+<p>”CD2”  –Centered L2 Discrepancy;</p>
+<p>”WD2” – Wrap-around L2 Discrepancy;</p>
+<p>”MD2”  –Mixture L2  Discrepancy;</p>
+<p>”maximin” – Maximin Discrepancy;</p>
+<p>”MC” – Minimize Coherence;</p>
+<p>”A2” – Minimize Average Chi-Square.</p>
+</p></li>
+<li><p><strong>maxiter</strong> (<em>a positive integer object</em><em>, </em><em>default=100</em>) – maximum iteration number in outer while loop of SATA algorithm.</p></li>
+<li><p><strong>nshoot</strong> (<em>a positive integer object</em><em>, </em><em>default=5</em>) – total counts to try different initial designs</p></li>
+<li><p><strong>rand_seed</strong> (<em>an integer object</em><em>, </em><em>default=0</em>) – random seed</p></li>
+<li><p><strong>hits_ratio</strong> (<em>a float object</em><em>, </em><em>default=0.1</em>) – Default value is 0.1, which is the ratio to accept changes of design in inner for loop</p></li>
+<li><p><strong>rand_seed</strong> – random seed</p></li>
+<li><p><strong>vis</strong> (<em>a boolean object</em><em>, </em><em>default=False</em>) – if true, plot the criterion value sequence</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyunidoe.pyunidoe.gen_aud_ms">
+<code class="descclassname">pyunidoe.pyunidoe.</code><code class="descname">gen_aud_ms</code><span class="sig-paren">(</span><em>xp</em>, <em>n</em>, <em>s</em>, <em>q</em>, <em>crit='CD2'</em>, <em>maxiter=100</em>, <em>nshoot=5</em>, <em>rand_seed=0</em>, <em>vis=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyunidoe/pyunidoe.html#gen_aud_ms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyunidoe.pyunidoe.gen_aud_ms" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function generates sequential Uniform Design of Experiments (Augmenting Runs) using diffrent initializations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>a numpy integer matrix object</em>) – representing the previous existing design matrix</p></li>
+<li><p><strong>n</strong> (<em>an integer object</em>) – run of experiments, including the previous design in xp</p></li>
+<li><p><strong>s</strong> (<em>an integer object</em>) – number of experimental factors</p></li>
+<li><p><strong>q</strong> (<em>an integer object</em>) – number of experimental levels for each factor</p></li>
+<li><p><strong>crit</strong> (<em>a character object</em><em>, </em><em>default=&quot;CD2&quot;</em>) – <p>criterion to be optimized:</p>
+<p>”CD2”  –Centered L2 Discrepancy;</p>
+<p>”WD2” – Wrap-around L2 Discrepancy;</p>
+<p>”MD2”  –Mixture L2  Discrepancy;</p>
+<p>”maximin” – Maximin Discrepancy;</p>
+<p>”MC” – Minimize Coherence;</p>
+<p>”A2” – Minimize Average Chi-Square.</p>
+</p></li>
+<li><p><strong>maxiter</strong> (<em>a positive integer object</em><em>, </em><em>default=100</em>) – maximum iteration number in outer while loop of SATA algorithm.</p></li>
+<li><p><strong>nshoot</strong> (<em>a positive integer object</em><em>, </em><em>default=5</em>) – total counts to try different initial designs</p></li>
+<li><p><strong>rand_seed</strong> (<em>an integer object</em><em>, </em><em>default=0</em>) – random seed</p></li>
+<li><p><strong>hits_ratio</strong> (<em>a float object</em><em>, </em><em>default=0.1</em>) – Default value is 0.1, which is the ratio to accept changes of design in inner for loop</p></li>
+<li><p><strong>rand_seed</strong> – random seed</p></li>
+<li><p><strong>vis</strong> (<em>a boolean object</em><em>, </em><em>default=False</em>) – if true, plot the criterion value sequence</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyunidoe.pyunidoe.gen_aud_col_ms">
+<code class="descclassname">pyunidoe.pyunidoe.</code><code class="descname">gen_aud_col_ms</code><span class="sig-paren">(</span><em>xp</em>, <em>n</em>, <em>s</em>, <em>q</em>, <em>crit='CD2'</em>, <em>maxiter=100</em>, <em>nshoot=5</em>, <em>rand_seed=0</em>, <em>vis=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyunidoe/pyunidoe.html#gen_aud_col_ms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyunidoe.pyunidoe.gen_aud_col_ms" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function generates sequential Uniform Design of Experiments (Augmenting Factors) using diffrent initializations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>a numpy integer matrix object</em>) – representing the previous existing design matrix</p></li>
+<li><p><strong>n</strong> (<em>an integer object</em>) – run of experiments</p></li>
+<li><p><strong>s</strong> (<em>an integer object</em>) – number of experimental factors, including the number of factors in previous design xp</p></li>
+<li><p><strong>q</strong> (<em>an integer object</em>) – number of experimental levels for each factor</p></li>
+<li><p><strong>crit</strong> (<em>a character object</em><em>, </em><em>default=&quot;CD2&quot;</em>) – <p>criterion to be optimized:</p>
+<p>”CD2”  –Centered L2 Discrepancy;</p>
+<p>”WD2” – Wrap-around L2 Discrepancy;</p>
+<p>”MD2”  –Mixture L2  Discrepancy;</p>
+<p>”maximin” – Maximin Discrepancy;</p>
+<p>”MC” – Minimize Coherence;</p>
+<p>”A2” – Minimize Average Chi-Square.</p>
+</p></li>
+<li><p><strong>maxiter</strong> (<em>a positive integer object</em><em>, </em><em>default=100</em>) – maximum iteration number in outer while loop of SATA algorithm.</p></li>
+<li><p><strong>nshoot</strong> (<em>a positive integer object</em><em>, </em><em>default=5</em>) – total counts to try different initial designs</p></li>
+<li><p><strong>rand_seed</strong> (<em>an integer object</em><em>, </em><em>default=0</em>) – random seed</p></li>
+<li><p><strong>hits_ratio</strong> (<em>a float object</em><em>, </em><em>default=0.1</em>) – Default value is 0.1, which is the ratio to accept changes of design in inner for loop</p></li>
+<li><p><strong>rand_seed</strong> – random seed</p></li>
+<li><p><strong>vis</strong> (<em>a boolean object</em><em>, </em><em>default=False</em>) – if true, plot the criterion value sequence</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 </div>
 
@@ -169,8 +461,6 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="apidoc.html" class="btn btn-neutral float-right" title="pyunidoe" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

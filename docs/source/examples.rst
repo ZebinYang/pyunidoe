@@ -5,13 +5,17 @@ Here we give more example usage of this package.
 
 Get an existing design from database
 ---------------------------------------------------
+
 .. code-block::
+
         pydoe.design_query(n=12,s=4,q=6,crit="CD2", show_crit = True)
         
         
 Evaluate existing designs
 ---------------------------------------------------
+
 .. code-block::
+
         x = np.array([[1, 2],
               [3, 3],
               [2, 1]])

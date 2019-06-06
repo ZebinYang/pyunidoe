@@ -1,5 +1,8 @@
 Modules
 ================================
 
-.. toctree::
-    apidoc.rst
+APIs
+---------
+
+.. automodule:: pyunidoe.pyunidoe
+  :members:
