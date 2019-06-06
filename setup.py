@@ -1,5 +1,3 @@
-import os
-from distutils.sysconfig import *
 from setuptools import setup, Extension
 
 pyUniDOE_module = Extension('_pyunidoe_swig', sources=['pyunidoe/pyunidoe_swig_wrap.cxx', 'pyunidoe/wrapper.cpp', 'pyunidoe/doe_optimizer.cpp', 'pyunidoe/doe_criteria.cpp',
@@ -17,13 +15,11 @@ setup(name='pyunidoe',
       package_dir={'pyunidoe': 'pyunidoe'},
       package_data={'pyunidoe': ['data/*.json']},
       install_requires=['matplotlib', 'numpy', 'pandas', 'seaborn'],
-      classifiers=[
-          'Development Status :: 4 - Beta',
-          'Environment :: Console',
-          'License :: OSI Approved :: BSD License',
-          'Operating System :: MacOS :: MacOS X',
-          'Operating System :: Microsoft :: Windows',
-          'Operating System :: POSIX',
-          'Programming Language :: Python',
-          ],
+      classifiers=['Development Status :: 4 - Beta',
+                   'Environment :: Console',
+                   'License :: OSI Approved :: BSD License',
+                   'Operating System :: MacOS :: MacOS X',
+                   'Operating System :: Microsoft :: Windows',
+                   'Operating System :: POSIX',
+                   'Programming Language :: Python'],
       zip_safe=False)

@@ -9,3 +9,6 @@ from .pyunidoe import gen_aud_col_ms
 from .pyunidoe import design_pairs_plot
 
 __all__ = ["pyunidoe"]
+
+__version__ = '0.1.0'
+__author__ = 'Zebin Yang and Aijun Zhang'
