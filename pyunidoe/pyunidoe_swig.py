@@ -22,7 +22,8 @@ elif _swig_python_version_info >= (2, 6, 0):
         import imp
         fp = None
         try:
-            fp, pathname, description = imp.find_module('_pyunidoe_swig', [dirname(__file__)])
+            fp, pathname, description = imp.find_module(
+                '_pyunidoe_swig', [dirname(__file__)])
         except ImportError:
             import _pyunidoe_swig
             return _pyunidoe_swig
@@ -77,7 +78,9 @@ def _swig_getattr(self, class_type, name):
     method = class_type.__swig_getmethods__.get(name, None)
     if method:
         return method(self)
-    raise AttributeError("'%s' object has no attribute '%s'" % (class_type.__name__, name))
+    raise AttributeError(
+    "'%s' object has no attribute '%s'" %
+     (class_type.__name__, name))
 
 
 def _swig_repr(self):
@@ -85,7 +88,8 @@ def _swig_repr(self):
         strthis = "proxy of " + self.this.__repr__()
     except __builtin__.Exception:
         strthis = ""
-    return "<%s.%s; %s >" % (self.__class__.__module__, self.__class__.__name__, strthis,)
+    return "<%s.%s; %s >" % (self.__class__.__module__,
+                             self.__class__.__name__, strthis,)
 
 try:
     _object = object
@@ -97,7 +101,8 @@ except __builtin__.Exception:
 
 class SwigPyIterator(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, SwigPyIterator, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(
+        self, SwigPyIterator, name, value)
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, SwigPyIterator, name)
 
@@ -161,7 +166,8 @@ SwigPyIterator_swigregister(SwigPyIterator)
 
 class DoubleVector(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, DoubleVector, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(
+        self, DoubleVector, name, value)
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, DoubleVector, name)
     __repr__ = _swig_repr
@@ -274,7 +280,8 @@ DoubleVector_swigregister(DoubleVector)
 
 class DoubleVecVec(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, DoubleVecVec, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(
+        self, DoubleVecVec, name, value)
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, DoubleVecVec, name)
     __repr__ = _swig_repr
@@ -387,7 +394,8 @@ DoubleVecVec_swigregister(DoubleVecVec)
 
 class IntegerVector(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, IntegerVector, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(
+        self, IntegerVector, name, value)
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, IntegerVector, name)
     __repr__ = _swig_repr
@@ -500,7 +508,8 @@ IntegerVector_swigregister(IntegerVector)
 
 class IntegerVecVec(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, IntegerVecVec, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(
+        self, IntegerVecVec, name, value)
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, IntegerVecVec, name)
     __repr__ = _swig_repr
@@ -613,34 +622,49 @@ IntegerVecVec_swigregister(IntegerVecVec)
 
 class List(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, List, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(
+        self, List, name, value)
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, List, name)
     __repr__ = _swig_repr
     __swig_setmethods__["Init_Design"] = _pyunidoe_swig.List_Init_Design_set
     __swig_getmethods__["Init_Design"] = _pyunidoe_swig.List_Init_Design_get
     if _newclass:
-        Init_Design = _swig_property(_pyunidoe_swig.List_Init_Design_get, _pyunidoe_swig.List_Init_Design_set)
+        Init_Design = _swig_property(
+    _pyunidoe_swig.List_Init_Design_get,
+     _pyunidoe_swig.List_Init_Design_set)
     __swig_setmethods__["Final_Design"] = _pyunidoe_swig.List_Final_Design_set
     __swig_getmethods__["Final_Design"] = _pyunidoe_swig.List_Final_Design_get
     if _newclass:
-        Final_Design = _swig_property(_pyunidoe_swig.List_Final_Design_get, _pyunidoe_swig.List_Final_Design_set)
+        Final_Design = _swig_property(
+    _pyunidoe_swig.List_Final_Design_get,
+     _pyunidoe_swig.List_Final_Design_set)
     __swig_setmethods__["Init_Obj"] = _pyunidoe_swig.List_Init_Obj_set
     __swig_getmethods__["Init_Obj"] = _pyunidoe_swig.List_Init_Obj_get
     if _newclass:
-        Init_Obj = _swig_property(_pyunidoe_swig.List_Init_Obj_get, _pyunidoe_swig.List_Init_Obj_set)
+        Init_Obj = _swig_property(
+    _pyunidoe_swig.List_Init_Obj_get,
+     _pyunidoe_swig.List_Init_Obj_set)
     __swig_setmethods__["Final_Obj"] = _pyunidoe_swig.List_Final_Obj_set
     __swig_getmethods__["Final_Obj"] = _pyunidoe_swig.List_Final_Obj_get
     if _newclass:
-        Final_Obj = _swig_property(_pyunidoe_swig.List_Final_Obj_get, _pyunidoe_swig.List_Final_Obj_set)
+        Final_Obj = _swig_property(
+    _pyunidoe_swig.List_Final_Obj_get,
+     _pyunidoe_swig.List_Final_Obj_set)
     __swig_setmethods__["Time_Second"] = _pyunidoe_swig.List_Time_Second_set
     __swig_getmethods__["Time_Second"] = _pyunidoe_swig.List_Time_Second_get
     if _newclass:
-        Time_Second = _swig_property(_pyunidoe_swig.List_Time_Second_get, _pyunidoe_swig.List_Time_Second_set)
-    __swig_setmethods__["Criterion_history"] = _pyunidoe_swig.List_Criterion_history_set
-    __swig_getmethods__["Criterion_history"] = _pyunidoe_swig.List_Criterion_history_get
+        Time_Second = _swig_property(
+    _pyunidoe_swig.List_Time_Second_get,
+     _pyunidoe_swig.List_Time_Second_set)
+    __swig_setmethods__[
+        "Criterion_history"] = _pyunidoe_swig.List_Criterion_history_set
+    __swig_getmethods__[
+        "Criterion_history"] = _pyunidoe_swig.List_Criterion_history_get
     if _newclass:
-        Criterion_history = _swig_property(_pyunidoe_swig.List_Criterion_history_get, _pyunidoe_swig.List_Criterion_history_set)
+        Criterion_history = _swig_property(
+    _pyunidoe_swig.List_Criterion_history_get,
+     _pyunidoe_swig.List_Criterion_history_set)
 
     def __init__(self):
         this = _pyunidoe_swig.new_List()
@@ -659,28 +683,34 @@ def criteria_selector(crit):
 criteria_selector = _pyunidoe_swig.criteria_selector
 
 def Generate_init_matrix(init_method, nsamp, nv, nlevel, initX):
-    return _pyunidoe_swig.Generate_init_matrix(init_method, nsamp, nv, nlevel, initX)
+    return _pyunidoe_swig.Generate_init_matrix(
+        init_method, nsamp, nv, nlevel, initX)
 Generate_init_matrix = _pyunidoe_swig.Generate_init_matrix
 
 def Generate_Aug_matrix(init_method, xp, nnew, nv, nlevel, initX):
-    return _pyunidoe_swig.Generate_Aug_matrix(init_method, xp, nnew, nv, nlevel, initX)
+    return _pyunidoe_swig.Generate_Aug_matrix(
+        init_method, xp, nnew, nv, nlevel, initX)
 Generate_Aug_matrix = _pyunidoe_swig.Generate_Aug_matrix
 
 def CritEval(x0, nlevel, crit):
     return _pyunidoe_swig.CritEval(x0, nlevel, crit)
 CritEval = _pyunidoe_swig.CritEval
 
-def SATA_UD(nsamp, nv, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed):
-    return _pyunidoe_swig.SATA_UD(nsamp, nv, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed)
+def SATA_UD(nsamp, nv, nlevel, init_method, initX, crit,
+            maxiter, hits_ratio, levelpermt, rand_seed):
+    return _pyunidoe_swig.SATA_UD(
+        nsamp, nv, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed)
 SATA_UD = _pyunidoe_swig.SATA_UD
 
-def SATA_AUD(xp, nnew, nv, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed):
-    return _pyunidoe_swig.SATA_AUD(xp, nnew, nv, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed)
+def SATA_AUD(xp, nnew, nv, nlevel, init_method, initX, crit,
+             maxiter, hits_ratio, levelpermt, rand_seed):
+    return _pyunidoe_swig.SATA_AUD(
+        xp, nnew, nv, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed)
 SATA_AUD = _pyunidoe_swig.SATA_AUD
 
-def SATA_AUD_COL(xp, nvnew, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed):
-    return _pyunidoe_swig.SATA_AUD_COL(xp, nvnew, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed)
+def SATA_AUD_COL(xp, nvnew, nlevel, init_method, initX, crit,
+                 maxiter, hits_ratio, levelpermt, rand_seed):
+    return _pyunidoe_swig.SATA_AUD_COL(
+        xp, nvnew, nlevel, init_method, initX, crit, maxiter, hits_ratio, levelpermt, rand_seed)
 SATA_AUD_COL = _pyunidoe_swig.SATA_AUD_COL
 # This file is compatible with both classic and new-style classes.
-
-

@@ -1,10 +1,10 @@
-import os 
+import os
 from distutils.sysconfig import *
 from setuptools import setup, Extension
 
-pyUniDOE_module=Extension('_pyunidoe_swig', sources=['pyunidoe/pyunidoe_swig_wrap.cxx','pyunidoe/wrapper.cpp','pyunidoe/doe_optimizer.cpp','pyunidoe/doe_criteria.cpp',
-                                'pyunidoe/doe_CD2.cpp','pyunidoe/doe_MD2.cpp','pyunidoe/doe_WD2.cpp', 
-                                'pyunidoe/doe_maximin.cpp','pyunidoe/doe_MC.cpp','pyunidoe/doe_A2.cpp'])
+pyUniDOE_module = Extension('_pyunidoe_swig', sources=['pyunidoe/pyunidoe_swig_wrap.cxx', 'pyunidoe/wrapper.cpp', 'pyunidoe/doe_optimizer.cpp', 'pyunidoe/doe_criteria.cpp',
+                                                       'pyunidoe/doe_CD2.cpp', 'pyunidoe/doe_MD2.cpp', 'pyunidoe/doe_WD2.cpp',
+                                                       'pyunidoe/doe_maximin.cpp', 'pyunidoe/doe_MC.cpp', 'pyunidoe/doe_A2.cpp'])
 
 setup(name='pyunidoe',
       version='0.1',
@@ -14,9 +14,9 @@ setup(name='pyunidoe',
       license='BSD',
       packages=['pyunidoe'],
       ext_modules=[pyUniDOE_module],
-      package_dir = {'pyunidoe': 'pyunidoe'},
-      package_data = {'pyunidoe': ['data/*.json']},
-      install_requires=['matplotlib', 'numpy', 'pandas', 'seaborn'], 
+      package_dir={'pyunidoe': 'pyunidoe'},
+      package_data={'pyunidoe': ['data/*.json']},
+      install_requires=['matplotlib', 'numpy', 'pandas', 'seaborn'],
       classifiers=[
           'Development Status :: 4 - Beta',
           'Environment :: Console',
@@ -26,4 +26,4 @@ setup(name='pyunidoe',
           'Operating System :: POSIX',
           'Programming Language :: Python',
           ],
-    zip_safe=False)
+      zip_safe=False)

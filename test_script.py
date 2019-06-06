@@ -18,9 +18,10 @@ class TestpyUniDOE(unittest.TestCase):
   def test_design_eval(self):
     """ Test DesignEval. """
     x = np.array([[1, 2],
-              [3, 3],
-              [2, 1]])
-    self.assertTrue(np.abs(pydoe.design_eval(x,crit="CD2") - 0.029578) <0.001)
+                  [3, 3],
+                  [2, 1]])
+    self.assertTrue(np.abs(pydoe.design_eval(
+      x, crit="CD2") - 0.029578) < 0.001)
 
 if __name__ == '__main__':
     unittest.main()
