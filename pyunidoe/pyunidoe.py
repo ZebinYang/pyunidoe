@@ -20,7 +20,6 @@ DATA_PATH = pkg_resources.resource_filename('pyunidoe', 'data/')
 
 
 def design_pairs_plot(x):
-
     """
     This function draws a pairs plot for checking the design.
 
@@ -35,7 +34,6 @@ def design_pairs_plot(x):
 
 
 def design_query(n, s, q, crit="CD2", show_crit=True):
-
     """
     This function takes size of desired design,criterion crit. If the required design exists in database, then return the design, else return NULL.
 
@@ -87,7 +85,6 @@ def design_query(n, s, q, crit="CD2", show_crit=True):
 
 
 def design_eval(x, crit="CD2"):
-
     """
     This function takes matrix X0,q and crit to output the criterion value.
 
@@ -131,7 +128,6 @@ def design_eval(x, crit="CD2"):
 
 
 def gen_ud(n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, hits_ratio=0.1, levelpermt=False, rand_seed=0, vis=False):
-
     """
     This function takes n,s,q and other arguments to output a list(described below).
 
@@ -260,7 +256,6 @@ def gen_ud(n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, 
 
 
 def gen_aud(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, hits_ratio=0.1, levelpermt=False, rand_seed=0, vis=False):
-
     """
     This function takes n,s,q; a unchanged initial design and other arguments to output a list (described below).
 
@@ -383,7 +378,6 @@ def gen_aud(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=
 
 
 def gen_aud_col(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, hits_ratio=0.1, levelpermt=False, rand_seed=0, vis=False):
-
     """
     This function takes n,s,q; a unchanged initial design and other arguments to output a list (described below).
 
@@ -506,7 +500,6 @@ def gen_aud_col(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxi
 
 
 def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=False):
-
     """
     This function generates Uniform Design of Experiments using diffrent initializations.
 
