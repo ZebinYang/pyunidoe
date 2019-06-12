@@ -516,7 +516,7 @@ def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=False
 
     :type  q: an integer object
     :param q: number of experimental levels for each factor
-
+    
     :type  crit: a character object, default="CD2"
     :param crit: criterion to be optimized:
 
@@ -549,7 +549,6 @@ def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=False
 
     :type vis: a boolean object, default=False
     :param vis: if true, plot the criterion value sequence
-
     """
 
     if ((isinstance(n, int) & isinstance(s, int) & isinstance(q, int)) is False):
@@ -565,8 +564,9 @@ def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=False
     shoot_idx = []
     time_list = []
     best_crit = 1e10
+    
     for i in range(nshoot):
-        stat = gen_ud(n=n, s=s, q=q, crit=crit, maxiter=maxiter, rand_seed=rand_seed + nshoot)
+        stat = gen_ud(n=n, s=s, q=q, crit=crit, maxiter=maxiter, rand_seed=rand_seed + i)
         crit_list.append(list(stat["criterion_history"]))
         shoot_idx.append(len(crit_list))
         time_list.append(stat["time_consumed"])
@@ -677,7 +677,7 @@ def gen_aud_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=
     time_list = []
     best_crit = 1e10
     for i in range(nshoot):
-        stat = gen_aud(xp=xp, n=n, s=s, q=q, crit=crit, maxiter=maxiter, rand_seed=rand_seed + nshoot)
+        stat = gen_aud(xp=xp, n=n, s=s, q=q, crit=crit, maxiter=maxiter, rand_seed=rand_seed + i)
         crit_list.append(list(stat["criterion_history"]))
         shoot_idx.append(len(crit_list))
         time_list.append(stat["time_consumed"])
@@ -788,7 +788,7 @@ def gen_aud_col_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, 
     time_list = []
     best_crit = 1e10
     for i in range(nshoot):
-        stat = gen_aud_col(xp=xp, n=n, s=s, q=q, crit=crit, maxiter=maxiter, rand_seed=rand_seed + nshoot)
+        stat = gen_aud_col(xp=xp, n=n, s=s, q=q, crit=crit, maxiter=maxiter, rand_seed=rand_seed + i)
         crit_list.append(list(stat["criterion_history"]))
         shoot_idx.append(len(crit_list))
         time_list.append(stat["time_consumed"])
