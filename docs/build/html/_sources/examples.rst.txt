@@ -83,11 +83,11 @@ Multi-shoot Strategy
 
         import numpy as np 
         import pyunidoe as pydoe
-        x1_multi = pydoe.gen_ud_ms(n=12, s=4, q=6, crit="CD2", maxiter=100, nshoot=5, vis=False)
+        x1_multi = pydoe.gen_ud_ms(n=12, s=4, q=6, crit="CD2", maxiter=100, nshoot=5, n_jobs=5, vis=False)
         pydoe.design_eval(x1_multi,crit="CD2")
         
-        x2_multi = pydoe.gen_aud_ms(x1_multi, n=24, s=4, q=6, crit="CD2", maxiter=100, nshoot=5, vis=False)
+        x2_multi = pydoe.gen_aud_ms(x1_multi, n=24, s=4, q=6, crit="CD2", maxiter=100, nshoot=5, n_jobs=5, vis=False)
         pydoe.design_eval(x2_multi,crit="CD2")
         
-        x3_multi = pydoe.gen_aud_col_ms(x1_multi, n=12, s=5, q=6, crit="CD2", maxiter=100, nshoot=5, vis=False)
+        x3_multi = pydoe.gen_aud_col_ms(x1_multi, n=12, s=5, q=6, crit="CD2", maxiter=100, nshoot=5, n_jobs=5, vis=False)
         pydoe.design_eval(x3_multi,crit="CD2")

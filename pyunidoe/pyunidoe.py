@@ -4,6 +4,7 @@ import pandas as pd
 import pkg_resources
 from seaborn import pairplot
 import matplotlib.pyplot as plt
+from joblib import Parallel, delayed
 from .pyunidoe_swig import CritEval, SATA_UD, SATA_AUD, SATA_AUD_COL
 
 __all__ = ["design_pairs_plot",
@@ -499,7 +500,7 @@ def gen_aud_col(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxi
     return stat
 
 
-def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=False):
+def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jobs=1, vis=False):
     """
     This function generates Uniform Design of Experiments using diffrent initializations.
 
@@ -547,6 +548,9 @@ def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=False
     :type  rand_seed: an integer object, default=0
     :param rand_seed: random seed
 
+    :type  n_jobs: an integer object, default=1
+    :param n_jobs: the number of cores to be used for parallelization
+
     :type vis: a boolean object, default=False
     :param vis: if true, plot the criterion value sequence
     """
@@ -565,8 +569,10 @@ def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=False
     time_list = []
     best_crit = 1e10
     
+    stats = Parallel(n_jobs=n_jobs)(delayed(gen_ud)(n=n, s=s, q=q, crit=crit, 
+                                    maxiter=maxiter, rand_seed=rand_seed + i) for i in range(nshoot))
     for i in range(nshoot):
-        stat = gen_ud(n=n, s=s, q=q, crit=crit, maxiter=maxiter, rand_seed=rand_seed + i)
+        stat = stats[i]
         crit_list.append(list(stat["criterion_history"]))
         shoot_idx.append(len(crit_list))
         time_list.append(stat["time_consumed"])
@@ -602,7 +608,7 @@ def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=False
     return best_design
 
 
-def gen_aud_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=False):
+def gen_aud_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jobs=1, vis=False):
     """
     This function generates sequential Uniform Design of Experiments (Augmenting Runs) using diffrent initializations.
 
@@ -649,6 +655,9 @@ def gen_aud_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=
 
     :type  rand_seed: an integer object, default=0
     :param rand_seed: random seed
+    
+    :type  n_jobs: an integer object, default=1
+    :param n_jobs: the number of cores to be used for parallelization
 
     :type vis: a boolean object, default=False
     :param vis: if true, plot the criterion value sequence
@@ -676,8 +685,11 @@ def gen_aud_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=
     shoot_idx = []
     time_list = []
     best_crit = 1e10
+    
+    stats = Parallel(n_jobs=n_jobs)(delayed(gen_aud)(xp=xp, n=n, s=s, q=q, crit=crit, 
+                                     maxiter=maxiter, rand_seed=rand_seed + i) for i in range(nshoot))
     for i in range(nshoot):
-        stat = gen_aud(xp=xp, n=n, s=s, q=q, crit=crit, maxiter=maxiter, rand_seed=rand_seed + i)
+        stat = stats[i]
         crit_list.append(list(stat["criterion_history"]))
         shoot_idx.append(len(crit_list))
         time_list.append(stat["time_consumed"])
@@ -713,7 +725,7 @@ def gen_aud_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=
     return best_design
 
 
-def gen_aud_col_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, vis=False):
+def gen_aud_col_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jobs=1, vis=False):
     """
     This function generates sequential Uniform Design of Experiments (Augmenting Factors) using diffrent initializations.
 
@@ -761,6 +773,9 @@ def gen_aud_col_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, 
     :type  rand_seed: an integer object, default=0
     :param rand_seed: random seed
 
+    :type  n_jobs: an integer object, default=1
+    :param n_jobs: the number of cores to be used for parallelization
+    
     :type vis: a boolean object, default=False
     :param vis: if true, plot the criterion value sequence
 
@@ -787,8 +802,12 @@ def gen_aud_col_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, 
     shoot_idx = []
     time_list = []
     best_crit = 1e10
+    
+    
+    stats = Parallel(n_jobs=n_jobs)(delayed(gen_aud_col)(xp=xp, n=n, s=s, q=q, crit=crit, 
+                                     maxiter=maxiter, rand_seed=rand_seed + i) for i in range(nshoot))
     for i in range(nshoot):
-        stat = gen_aud_col(xp=xp, n=n, s=s, q=q, crit=crit, maxiter=maxiter, rand_seed=rand_seed + i)
+        stat = stats[i]
         crit_list.append(list(stat["criterion_history"]))
         shoot_idx.append(len(crit_list))
         time_list.append(stat["time_consumed"])
