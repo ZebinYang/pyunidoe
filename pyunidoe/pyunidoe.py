@@ -555,6 +555,7 @@ def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jobs=1,
     :param vis: if true, plot the criterion value sequence
     """
 
+
     if ((isinstance(n, int) & isinstance(s, int) & isinstance(q, int)) is False):
         raise ValueError("Wrong types of n,s,q.")
     elif ((n % q) != 0):
