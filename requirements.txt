@@ -11,4 +11,3 @@ seaborn
 matplotlib>=2.2.2
 
 joblib
-Parallel
