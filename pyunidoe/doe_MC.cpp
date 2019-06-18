@@ -107,7 +107,7 @@ double MC::columnwise_exchange(int ncol, int ncp, vector<int> idx1,vector<int> i
         swap(tempx[i1][ncol], tempx[i2][ncol]);
     }
     a2_diff = a2->columnwise_exchange(ncol, ncp, idx1, idx2);
-    diff = temp_obj * M + a2_diff - surrogate_obj;
+    diff = temp_obj * M - obj * M + a2_diff;
     return(diff);
 }
 
