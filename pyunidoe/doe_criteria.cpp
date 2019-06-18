@@ -16,7 +16,6 @@ double Criteria::get_columnwise_exchange(int ncol,int ncp, vector<int> idx1,vect
 {
     double diff;
     diff = columnwise_exchange(ncol, ncp, idx1, idx2);
-    evaluate_criteria();
     return(surrogate_obj+diff);
 }
 
