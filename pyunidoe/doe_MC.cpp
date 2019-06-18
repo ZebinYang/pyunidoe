@@ -28,6 +28,8 @@ void MC::update_design(vector<vector<double> > init)
                 x[i][j]=init[i][j];
             }
     }
+    a2->update_design(init);
+    a2->evaluate_criteria();
 }
 
 vector<vector<double> > MC::get_design()
@@ -44,6 +46,7 @@ vector<vector<double> > MC::get_design()
 void MC::evaluate_criteria()
 {
     int i,j,k,count = 0;
+    double a2_surrogate_obj;
     obj = surrogate_obj = 0;
     CORR.assign(static_cast<unsigned long long int>(nv), vector<double>(nv, 0));
     for(i=0;i<nv;i++)
@@ -56,21 +59,19 @@ void MC::evaluate_criteria()
             if ( (abs(CORR[i][j]) - obj ) > EPS)
             {
                 obj = abs(CORR[i][j]);
-                count = 1;
-            } else if ( abs(abs(CORR[i][j]) - obj ) < EPS)
-            {
-                count += 1;
             }
             CORR[j][i] = CORR[i][j];
         }
     }
-    surrogate_obj = obj * 10000 * (nsamp*(nsamp-1)/2) + count;
+    a2->evaluate_criteria();
+    a2_surrogate_obj = a2->get_surrogate_criteria();
+    surrogate_obj = obj * M + a2_surrogate_obj;
 }
 
 double MC::columnwise_exchange(int ncol, int ncp, vector<int> idx1,vector<int> idx2)
 {
-    int i1,i2,i,j, count = 0;
-    double temp_obj,diff;
+    int i1,i2,i,j;
+    double temp_obj,diff, a2_diff;
     temp_obj = 0;
     tempx = x;
     tempCORR = CORR;
@@ -81,9 +82,6 @@ double MC::columnwise_exchange(int ncol, int ncp, vector<int> idx1,vector<int> i
             if ((i!=ncol)&(j!=ncol)) {
                 if ( (abs(tempCORR[i][j]) - temp_obj ) > EPS) {
                     temp_obj = abs(tempCORR[i][j]);
-                    count = 1;
-                } else if (abs(abs(tempCORR[i][j]) - temp_obj)<EPS) {
-                    count += 1;
                 }
             }
         }
@@ -95,51 +93,22 @@ double MC::columnwise_exchange(int ncol, int ncp, vector<int> idx1,vector<int> i
         {
             if (ncol>i) {
                 tempCORR[i][ncol] += x[i1][ncol] * x[i2][i] +  x[i2][ncol] * x[i1][i] -  x[i1][ncol] * x[i1][i] -  x[i2][ncol] * x[i2][i];
-                if ( (abs(tempCORR[i][ncol]) - temp_obj ) > EPS)
-                {
-                    temp_obj = abs(tempCORR[i][ncol]) ;
-                    count = 1;
-                } else if (abs(abs(tempCORR[i][ncol]) - temp_obj)<EPS)
-                {
-                    count += 1;
+                if ( (abs(tempCORR[i][ncol]) - temp_obj ) > EPS) {
+                    temp_obj = abs(tempCORR[i][ncol]);
                 }
-
             } else if (ncol<i)
             {
                 tempCORR[ncol][i] += x[i1][ncol] * x[i2][i] +  x[i2][ncol] * x[i1][i] -  x[i1][ncol] * x[i1][i] -  x[i2][ncol] * x[i2][i];
-                if ( (abs(tempCORR[ncol][i]) - temp_obj ) > EPS)
-                {
+                if ( (abs(tempCORR[ncol][i]) - temp_obj ) > EPS) {
                     temp_obj = abs(tempCORR[ncol][i]);
-                    count = 1;
-                } else if (abs(abs(tempCORR[ncol][i]) - temp_obj)<EPS)
-                {
-                    count += 1;
                 }
             }
         }
         swap(tempx[i1][ncol], tempx[i2][ncol]);
     }
-    diff =  temp_obj * 10000 * (nsamp*(nsamp-1)/2) + count - surrogate_obj;
+    a2_diff = a2->columnwise_exchange(ncol, ncp, idx1, idx2);
+    diff = temp_obj * M + a2_diff - surrogate_obj;
     return(diff);
-}
-
-double MC::calculate_lower_bound()
-{
-    double lb1 = 0, lb2 = 0, k1, k2;
-    if (nv>nsamp)
-    {
-        lb1 = sqrt((nv-nsamp+1.0)/((nsamp-1.0)*(nv-1.0)));
-        if (((nv%2 == 0)&(nlevel%2 == 0))|(nlevel%2 == 1))
-        {
-            k1 = floor(-2*nv*A/(nsamp*(nsamp-1)));
-            lb2 = sqrt(-k1*nsamp*(nsamp-1)*(k1+1.0)/(4*nv*(nv-1)*A*A) - (2*k1+1)/(2*(nv-1)*A) +1.0*(nv-nsamp)/(nsamp*(nv-1)));
-        } else {
-            k2 = floor((-4*nv*A-nsamp*(nsamp-1))/(2*nsamp*(nsamp-1)));
-            lb2 = sqrt(-nsamp*(nsamp-1)*(4*k2*k2+8*k2+3)/(16*nv*(nv-1)*A*A)-(k2+1)/((nv-1)*A)+1.0*(nv-nsamp)/(nsamp*(nv-1)));
-        }
-    }
-    cout<<"lower bound:"<<lb1<<" "<<lb2<<endl;
-    return(lb2);
 }
 
 vector<double> MC::get_criteria_matrix()
