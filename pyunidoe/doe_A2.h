@@ -1,19 +1,15 @@
 //
-// Created by Administrator on 2019/4/11.
+// Created by Administrator on 2019/4/14.
 //
 #include "doe_criteria.h"
 
-using namespace std;
+#ifndef CPP_VERSION_DOE_EXPSQUARE_H
+#define CPP_VERSION_DOE_EXPSQUARE_H
 
+class A2: public Criteria{
 
-#ifndef CPP_VERSION_DOE_CHISQUARE_H
-#define CPP_VERSION_DOE_CHISQUARE_H
-
-class A2: public Criteria {
-
-    double power;
-    vector<vector<double> > NPairs, tempNPairs;
-
+    vector<vector<double> > CORR, tempCORR;
+    double A;
 public:
     A2(vector<vector<double> > init,int nsamp_init,int nv_init, int nlevel_init): Criteria(nsamp_init,nv_init, nlevel_init) {
         init_design(init);
@@ -26,4 +22,4 @@ public:
     double columnwise_exchange(int ncol,int ncp, vector<int> idx1,vector<int> idx2);
 };
 
-#endif //CPP_VERSION_DOE_CHISQUARE_H
+#endif //CPP_VERSION_DOE_EXPSQUARE_H

@@ -54,7 +54,7 @@ def design_query(n, s, q, crit="CD2", show_crit=True):
 
              "CD2": Centered L2 Discrepancy;
 
-             "MD2": Mixture L2  Discrepancy.
+             "MD2": Mixture L2 Discrepancy.
 
     :type  show_crit: boolean
     :param show_crit: choose to print the criteria value
@@ -97,17 +97,17 @@ def design_eval(x, crit="CD2"):
     :type  crit: a character object, default="CD2"
     :param crit: criterion to be evaluated:
 
-             "CD2"  --Centered L2 Discrepancy;
+             "CD2" -- Centered L2 Discrepancy;
 
              "WD2" -- Wrap-around L2 Discrepancy;
 
-             "MD2"  --Mixture L2  Discrepancy;
+             "MD2" -- Mixture L2 Discrepancy;
 
              "maximin" -- Maximin Discrepancy;
 
-             "MC" -- Minimize Coherence;
+             "MC" -- Minimum Coherence;
 
-             "A2" -- Minimize Average Chi-Square.
+             "A2" -- Mean Squared Correlation.
 
     Example
     -------
@@ -146,17 +146,17 @@ def gen_ud(n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, 
     :type  crit: a character object, default="CD2"
     :param crit: criterion to be optimized:
 
-             "CD2"  --Centered L2 Discrepancy;
+             "CD2" -- Centered L2 Discrepancy;
 
              "WD2" -- Wrap-around L2 Discrepancy;
 
-             "MD2"  --Mixture L2  Discrepancy;
+             "MD2" -- Mixture L2 Discrepancy;
 
              "maximin" -- Maximin Discrepancy;
 
-             "MC" -- Minimize Coherence;
+             "MC" -- Minimum Coherence;
 
-             "A2" -- Minimize Average Chi-Square.
+             "A2" -- Mean Squared Correlation.
 
     :type  init: a string vector object, default="rand"
     :param init: initialization method for the design:
@@ -277,17 +277,17 @@ def gen_aud(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=
     :type  crit: a character object, default="CD2"
     :param crit: criterion to be optimized:
 
-             "CD2"  --Centered L2 Discrepancy;
+             "CD2" -- Centered L2 Discrepancy;
 
              "WD2" -- Wrap-around L2 Discrepancy;
 
-             "MD2"  --Mixture L2  Discrepancy;
+             "MD2" -- Mixture L2 Discrepancy;
 
              "maximin" -- Maximin Discrepancy;
 
-             "MC" -- Minimize Coherence;
+             "MC" -- Minimum Coherence;
 
-             "A2" -- Minimize Average Chi-Square.
+             "A2" -- Mean Squared Correlation.
 
     :type  init: a string vector object, default="rand"
     :param init: initialization method for the run-augmented design:
@@ -399,17 +399,17 @@ def gen_aud_col(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxi
     :type  crit: a character object, default="CD2"
     :param crit: criterion to be optimized:
 
-             "CD2"  --Centered L2 Discrepancy;
+             "CD2" -- Centered L2 Discrepancy;
 
              "WD2" -- Wrap-around L2 Discrepancy;
 
-             "MD2"  --Mixture L2  Discrepancy;
+             "MD2" -- Mixture L2 Discrepancy;
 
              "maximin" -- Maximin Discrepancy;
 
-             "MC" -- Minimize Coherence;
+             "MC" -- Minimum Coherence;
 
-             "A2" -- Minimize Average Chi-Square.
+             "A2" -- Mean Squared Correlation.
 
     :type  init: a string vector object, default="rand"
     :param init: initialization method for the factor-augmented design:
@@ -521,17 +521,17 @@ def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jobs=1,
     :type  crit: a character object, default="CD2"
     :param crit: criterion to be optimized:
 
-             "CD2"  --Centered L2 Discrepancy;
+             "CD2" -- Centered L2 Discrepancy;
 
              "WD2" -- Wrap-around L2 Discrepancy;
 
-             "MD2"  --Mixture L2  Discrepancy;
+             "MD2" -- Mixture L2 Discrepancy;
 
              "maximin" -- Maximin Discrepancy;
 
-             "MC" -- Minimize Coherence;
+             "MC" -- Minimum Coherence;
 
-             "A2" -- Minimize Average Chi-Square.
+             "A2" -- Mean Squared Correlation.
 
     :type  maxiter: a positive integer object, default=100
     :param maxiter: maximum iteration number in outer while loop of SATA algorithm.
@@ -630,17 +630,17 @@ def gen_aud_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jo
     :type  crit: a character object, default="CD2"
     :param crit: criterion to be optimized:
 
-             "CD2"  --Centered L2 Discrepancy;
+             "CD2" -- Centered L2 Discrepancy;
 
              "WD2" -- Wrap-around L2 Discrepancy;
 
-             "MD2"  --Mixture L2  Discrepancy;
+             "MD2" -- Mixture L2 Discrepancy;
 
              "maximin" -- Maximin Discrepancy;
 
-             "MC" -- Minimize Coherence;
+             "MC" -- Minimum Coherence;
 
-             "A2" -- Minimize Average Chi-Square.
+             "A2" -- Mean Squared Correlation.
 
     :type  maxiter: a positive integer object, default=100
     :param maxiter: maximum iteration number in outer while loop of SATA algorithm.
@@ -747,17 +747,17 @@ def gen_aud_col_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, 
     :type  crit: a character object, default="CD2"
     :param crit: criterion to be optimized:
 
-             "CD2"  --Centered L2 Discrepancy;
+             "CD2" -- Centered L2 Discrepancy;
 
              "WD2" -- Wrap-around L2 Discrepancy;
 
-             "MD2"  --Mixture L2  Discrepancy;
+             "MD2" -- Mixture L2 Discrepancy;
 
              "maximin" -- Maximin Discrepancy;
 
-             "MC" -- Minimize Coherence;
+             "MC" -- Minimum Coherence;
 
-             "A2" -- Minimize Average Chi-Square.
+             "A2" -- Mean Squared Correlation.
 
     :type  maxiter: a positive integer object, default=100
     :param maxiter: maximum iteration number in outer while loop of SATA algorithm.

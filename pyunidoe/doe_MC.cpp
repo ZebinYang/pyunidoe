@@ -28,8 +28,6 @@ void MC::update_design(vector<vector<double> > init)
                 x[i][j]=init[i][j];
             }
     }
-    a2->update_design(init);
-    a2->evaluate_criteria();
 }
 
 vector<vector<double> > MC::get_design()
@@ -59,19 +57,21 @@ void MC::evaluate_criteria()
             if ( (abs(CORR[i][j]) - obj ) > EPS)
             {
                 obj = abs(CORR[i][j]);
+                count = 1;
+            } else if ( abs(abs(CORR[i][j]) - obj ) < EPS)
+            {
+                count += 1;
             }
             CORR[j][i] = CORR[i][j];
         }
     }
-    a2->evaluate_criteria();
-    a2_surrogate_obj = a2->get_surrogate_criteria();
-    surrogate_obj = obj * M + a2_surrogate_obj;
+    surrogate_obj = obj * M + count;
 }
 
 double MC::columnwise_exchange(int ncol, int ncp, vector<int> idx1,vector<int> idx2)
 {
-    int i1,i2,i,j;
-    double temp_obj,diff, a2_diff;
+    int i1,i2,i,j, count = 0;
+    double temp_obj,diff;
     temp_obj = 0;
     tempx = x;
     tempCORR = CORR;
@@ -82,6 +82,9 @@ double MC::columnwise_exchange(int ncol, int ncp, vector<int> idx1,vector<int> i
             if ((i!=ncol)&(j!=ncol)) {
                 if ( (abs(tempCORR[i][j]) - temp_obj ) > EPS) {
                     temp_obj = abs(tempCORR[i][j]);
+                    count = 1;
+                } else if (abs(abs(tempCORR[i][j]) - temp_obj)<EPS) {
+                    count += 1;
                 }
             }
         }
@@ -93,21 +96,31 @@ double MC::columnwise_exchange(int ncol, int ncp, vector<int> idx1,vector<int> i
         {
             if (ncol>i) {
                 tempCORR[i][ncol] += x[i1][ncol] * x[i2][i] +  x[i2][ncol] * x[i1][i] -  x[i1][ncol] * x[i1][i] -  x[i2][ncol] * x[i2][i];
-                if ( (abs(tempCORR[i][ncol]) - temp_obj ) > EPS) {
-                    temp_obj = abs(tempCORR[i][ncol]);
+                if ( (abs(tempCORR[i][ncol]) - temp_obj ) > EPS)
+                {
+                    temp_obj = abs(tempCORR[i][ncol]) ;
+                    count = 1;
+                } else if (abs(abs(tempCORR[i][ncol]) - temp_obj)<EPS)
+                {
+                    count += 1;
                 }
+
             } else if (ncol<i)
             {
                 tempCORR[ncol][i] += x[i1][ncol] * x[i2][i] +  x[i2][ncol] * x[i1][i] -  x[i1][ncol] * x[i1][i] -  x[i2][ncol] * x[i2][i];
-                if ( (abs(tempCORR[ncol][i]) - temp_obj ) > EPS) {
+                if ( (abs(tempCORR[ncol][i]) - temp_obj ) > EPS)
+                {
                     temp_obj = abs(tempCORR[ncol][i]);
+                    count = 1;
+                } else if (abs(abs(tempCORR[ncol][i]) - temp_obj)<EPS)
+                {
+                    count += 1;
                 }
             }
         }
         swap(tempx[i1][ncol], tempx[i2][ncol]);
     }
-    a2_diff = a2->columnwise_exchange(ncol, ncp, idx1, idx2);
-    diff = temp_obj * M - obj * M + a2_diff;
+    diff =  temp_obj * M + count - surrogate_obj;
     return(diff);
 }
 
