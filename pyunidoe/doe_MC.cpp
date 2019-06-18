@@ -7,6 +7,7 @@
 void MC::init_design(vector<vector<double> > init)
 {
     int i,j;
+    M = 10000;
     A = nsamp*(nlevel*nlevel-1.0)/12.0;
     CORR.assign(static_cast<unsigned long long int>(nv), vector<double>(nv, 0));
     if(!init.empty())
@@ -44,7 +45,6 @@ vector<vector<double> > MC::get_design()
 void MC::evaluate_criteria()
 {
     int i,j,k,count = 0;
-    double a2_surrogate_obj;
     obj = surrogate_obj = 0;
     CORR.assign(static_cast<unsigned long long int>(nv), vector<double>(nv, 0));
     for(i=0;i<nv;i++)

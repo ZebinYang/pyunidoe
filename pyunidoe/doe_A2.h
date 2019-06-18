@@ -3,6 +3,8 @@
 //
 #include "doe_criteria.h"
 
+using namespace std;
+
 #ifndef CPP_VERSION_DOE_EXPSQUARE_H
 #define CPP_VERSION_DOE_EXPSQUARE_H
 

@@ -12,7 +12,8 @@ class MC: public Criteria{
 
     vector<vector<double> > CORR, tempCORR;
     double A;
-    int M=10000;
+    int M;
+    
 public:
     MC(vector<vector<double> > init,int nsamp_init,int nv_init, int nlevel_init): Criteria(nsamp_init, nv_init, nlevel_init) {
         init_design(init);
