@@ -7,7 +7,7 @@
 void MC::init_design(vector<vector<double> > init)
 {
     int i,j;
-    M = 10000;
+    M = 10000 * (nsamp*(nsamp-1)/2);
     A = nsamp*(nlevel*nlevel-1.0)/12.0;
     CORR.assign(static_cast<unsigned long long int>(nv), vector<double>(nv, 0));
     if(!init.empty())
