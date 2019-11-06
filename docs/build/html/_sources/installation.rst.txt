@@ -38,7 +38,7 @@ You can install the package by the following console command:
 
 .. code-block::
 
-    pip install git+https://github.com/ZebinYang/pyunidoe.git.
+    pip install git+https://github.com/ZebinYang/pyunidoe.git
         
         
 Manual Installation
@@ -46,7 +46,7 @@ Manual Installation
 
 If git is not available, you can manually install the package by downloading the source codes and then compiling it by hand:
 
-- Download the source codes from https://github.com/ZebinYang/pyunidoe.git.
+- Download the source codes from https://github.com/ZebinYang/pyunidoe.git
 
 - unzip and switch to the root folder.
 

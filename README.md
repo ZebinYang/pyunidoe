@@ -11,7 +11,7 @@
     
 Assume you have figured out the above environment, the most convenient way for installation is via the pip command. 
 ```sheel
-pip install git+https://github.com/ZebinYang/pyunidoe.git.
+pip install git+https://github.com/ZebinYang/pyunidoe.git
 ```
 
 More details can be found in [documentation](https://zebinyang.github.io/pyunidoe/build/html/index.html).

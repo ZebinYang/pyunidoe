@@ -151,6 +151,7 @@
 <span class="kn">import</span> <span class="nn">pkg_resources</span>
 <span class="kn">from</span> <span class="nn">seaborn</span> <span class="k">import</span> <span class="n">pairplot</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">joblib</span> <span class="k">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
 <span class="kn">from</span> <span class="nn">.pyunidoe_swig</span> <span class="k">import</span> <span class="n">CritEval</span><span class="p">,</span> <span class="n">SATA_UD</span><span class="p">,</span> <span class="n">SATA_AUD</span><span class="p">,</span> <span class="n">SATA_AUD_COL</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;design_pairs_plot&quot;</span><span class="p">,</span>
@@ -167,7 +168,6 @@
 
 
 <div class="viewcode-block" id="design_pairs_plot"><a class="viewcode-back" href="../../modules.html#pyunidoe.pyunidoe.design_pairs_plot">[docs]</a><span class="k">def</span> <span class="nf">design_pairs_plot</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function draws a pairs plot for checking the design.</span>
 
@@ -182,7 +182,6 @@
 
 
 <div class="viewcode-block" id="design_query"><a class="viewcode-back" href="../../modules.html#pyunidoe.pyunidoe.design_query">[docs]</a><span class="k">def</span> <span class="nf">design_query</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">crit</span><span class="o">=</span><span class="s2">&quot;CD2&quot;</span><span class="p">,</span> <span class="n">show_crit</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function takes size of desired design,criterion crit. If the required design exists in database, then return the design, else return NULL.</span>
 
@@ -202,7 +201,7 @@
 
 <span class="sd">             &quot;CD2&quot;: Centered L2 Discrepancy;</span>
 
-<span class="sd">             &quot;MD2&quot;: Mixture L2  Discrepancy.</span>
+<span class="sd">             &quot;MD2&quot;: Mixture L2 Discrepancy.</span>
 
 <span class="sd">    :type  show_crit: boolean</span>
 <span class="sd">    :param show_crit: choose to print the criteria value</span>
@@ -234,7 +233,6 @@
 
 
 <div class="viewcode-block" id="design_eval"><a class="viewcode-back" href="../../modules.html#pyunidoe.pyunidoe.design_eval">[docs]</a><span class="k">def</span> <span class="nf">design_eval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">crit</span><span class="o">=</span><span class="s2">&quot;CD2&quot;</span><span class="p">):</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function takes matrix X0,q and crit to output the criterion value.</span>
 
@@ -246,17 +244,17 @@
 <span class="sd">    :type  crit: a character object, default=&quot;CD2&quot;</span>
 <span class="sd">    :param crit: criterion to be evaluated:</span>
 
-<span class="sd">             &quot;CD2&quot;  --Centered L2 Discrepancy;</span>
+<span class="sd">             &quot;CD2&quot; -- Centered L2 Discrepancy;</span>
 
 <span class="sd">             &quot;WD2&quot; -- Wrap-around L2 Discrepancy;</span>
 
-<span class="sd">             &quot;MD2&quot;  --Mixture L2  Discrepancy;</span>
+<span class="sd">             &quot;MD2&quot; -- Mixture L2 Discrepancy;</span>
 
 <span class="sd">             &quot;maximin&quot; -- Maximin Discrepancy;</span>
 
-<span class="sd">             &quot;MC&quot; -- Minimize Coherence;</span>
+<span class="sd">             &quot;MC&quot; -- Minimum Coherence;</span>
 
-<span class="sd">             &quot;A2&quot; -- Minimize Average Chi-Square.</span>
+<span class="sd">             &quot;A2&quot; -- Mean Squared Correlation.</span>
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
@@ -278,7 +276,6 @@
 
 
 <div class="viewcode-block" id="gen_ud"><a class="viewcode-back" href="../../modules.html#pyunidoe.pyunidoe.gen_ud">[docs]</a><span class="k">def</span> <span class="nf">gen_ud</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;rand&quot;</span><span class="p">,</span> <span class="n">initX</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[]]),</span> <span class="n">crit</span><span class="o">=</span><span class="s2">&quot;CD2&quot;</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">hits_ratio</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">levelpermt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vis</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function takes n,s,q and other arguments to output a list(described below).</span>
 
@@ -296,17 +293,17 @@
 <span class="sd">    :type  crit: a character object, default=&quot;CD2&quot;</span>
 <span class="sd">    :param crit: criterion to be optimized:</span>
 
-<span class="sd">             &quot;CD2&quot;  --Centered L2 Discrepancy;</span>
+<span class="sd">             &quot;CD2&quot; -- Centered L2 Discrepancy;</span>
 
 <span class="sd">             &quot;WD2&quot; -- Wrap-around L2 Discrepancy;</span>
 
-<span class="sd">             &quot;MD2&quot;  --Mixture L2  Discrepancy;</span>
+<span class="sd">             &quot;MD2&quot; -- Mixture L2 Discrepancy;</span>
 
 <span class="sd">             &quot;maximin&quot; -- Maximin Discrepancy;</span>
 
-<span class="sd">             &quot;MC&quot; -- Minimize Coherence;</span>
+<span class="sd">             &quot;MC&quot; -- Minimum Coherence;</span>
 
-<span class="sd">             &quot;A2&quot; -- Minimize Average Chi-Square.</span>
+<span class="sd">             &quot;A2&quot; -- Mean Squared Correlation.</span>
 
 <span class="sd">    :type  init: a string vector object, default=&quot;rand&quot;</span>
 <span class="sd">    :param init: initialization method for the design:</span>
@@ -407,7 +404,6 @@
 
 
 <div class="viewcode-block" id="gen_aud"><a class="viewcode-back" href="../../modules.html#pyunidoe.pyunidoe.gen_aud">[docs]</a><span class="k">def</span> <span class="nf">gen_aud</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;rand&quot;</span><span class="p">,</span> <span class="n">initX</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[]]),</span> <span class="n">crit</span><span class="o">=</span><span class="s2">&quot;CD2&quot;</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">hits_ratio</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">levelpermt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vis</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function takes n,s,q; a unchanged initial design and other arguments to output a list (described below).</span>
 
@@ -428,17 +424,17 @@
 <span class="sd">    :type  crit: a character object, default=&quot;CD2&quot;</span>
 <span class="sd">    :param crit: criterion to be optimized:</span>
 
-<span class="sd">             &quot;CD2&quot;  --Centered L2 Discrepancy;</span>
+<span class="sd">             &quot;CD2&quot; -- Centered L2 Discrepancy;</span>
 
 <span class="sd">             &quot;WD2&quot; -- Wrap-around L2 Discrepancy;</span>
 
-<span class="sd">             &quot;MD2&quot;  --Mixture L2  Discrepancy;</span>
+<span class="sd">             &quot;MD2&quot; -- Mixture L2 Discrepancy;</span>
 
 <span class="sd">             &quot;maximin&quot; -- Maximin Discrepancy;</span>
 
-<span class="sd">             &quot;MC&quot; -- Minimize Coherence;</span>
+<span class="sd">             &quot;MC&quot; -- Minimum Coherence;</span>
 
-<span class="sd">             &quot;A2&quot; -- Minimize Average Chi-Square.</span>
+<span class="sd">             &quot;A2&quot; -- Mean Squared Correlation.</span>
 
 <span class="sd">    :type  init: a string vector object, default=&quot;rand&quot;</span>
 <span class="sd">    :param init: initialization method for the run-augmented design:</span>
@@ -530,7 +526,6 @@
 
 
 <div class="viewcode-block" id="gen_aud_col"><a class="viewcode-back" href="../../modules.html#pyunidoe.pyunidoe.gen_aud_col">[docs]</a><span class="k">def</span> <span class="nf">gen_aud_col</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;rand&quot;</span><span class="p">,</span> <span class="n">initX</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[]]),</span> <span class="n">crit</span><span class="o">=</span><span class="s2">&quot;CD2&quot;</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">hits_ratio</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">levelpermt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vis</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function takes n,s,q; a unchanged initial design and other arguments to output a list (described below).</span>
 
@@ -551,17 +546,17 @@
 <span class="sd">    :type  crit: a character object, default=&quot;CD2&quot;</span>
 <span class="sd">    :param crit: criterion to be optimized:</span>
 
-<span class="sd">             &quot;CD2&quot;  --Centered L2 Discrepancy;</span>
+<span class="sd">             &quot;CD2&quot; -- Centered L2 Discrepancy;</span>
 
 <span class="sd">             &quot;WD2&quot; -- Wrap-around L2 Discrepancy;</span>
 
-<span class="sd">             &quot;MD2&quot;  --Mixture L2  Discrepancy;</span>
+<span class="sd">             &quot;MD2&quot; -- Mixture L2 Discrepancy;</span>
 
 <span class="sd">             &quot;maximin&quot; -- Maximin Discrepancy;</span>
 
-<span class="sd">             &quot;MC&quot; -- Minimize Coherence;</span>
+<span class="sd">             &quot;MC&quot; -- Minimum Coherence;</span>
 
-<span class="sd">             &quot;A2&quot; -- Minimize Average Chi-Square.</span>
+<span class="sd">             &quot;A2&quot; -- Mean Squared Correlation.</span>
 
 <span class="sd">    :type  init: a string vector object, default=&quot;rand&quot;</span>
 <span class="sd">    :param init: initialization method for the factor-augmented design:</span>
@@ -652,8 +647,7 @@
     <span class="k">return</span> <span class="n">stat</span></div>
 
 
-<div class="viewcode-block" id="gen_ud_ms"><a class="viewcode-back" href="../../modules.html#pyunidoe.pyunidoe.gen_ud_ms">[docs]</a><span class="k">def</span> <span class="nf">gen_ud_ms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">crit</span><span class="o">=</span><span class="s2">&quot;CD2&quot;</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">nshoot</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vis</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-
+<div class="viewcode-block" id="gen_ud_ms"><a class="viewcode-back" href="../../modules.html#pyunidoe.pyunidoe.gen_ud_ms">[docs]</a><span class="k">def</span> <span class="nf">gen_ud_ms</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">crit</span><span class="o">=</span><span class="s2">&quot;CD2&quot;</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">nshoot</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">vis</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function generates Uniform Design of Experiments using diffrent initializations.</span>
 
@@ -670,21 +664,21 @@
 
 <span class="sd">    :type  q: an integer object</span>
 <span class="sd">    :param q: number of experimental levels for each factor</span>
-
+<span class="sd">    </span>
 <span class="sd">    :type  crit: a character object, default=&quot;CD2&quot;</span>
 <span class="sd">    :param crit: criterion to be optimized:</span>
 
-<span class="sd">             &quot;CD2&quot;  --Centered L2 Discrepancy;</span>
+<span class="sd">             &quot;CD2&quot; -- Centered L2 Discrepancy;</span>
 
 <span class="sd">             &quot;WD2&quot; -- Wrap-around L2 Discrepancy;</span>
 
-<span class="sd">             &quot;MD2&quot;  --Mixture L2  Discrepancy;</span>
+<span class="sd">             &quot;MD2&quot; -- Mixture L2 Discrepancy;</span>
 
 <span class="sd">             &quot;maximin&quot; -- Maximin Discrepancy;</span>
 
-<span class="sd">             &quot;MC&quot; -- Minimize Coherence;</span>
+<span class="sd">             &quot;MC&quot; -- Minimum Coherence;</span>
 
-<span class="sd">             &quot;A2&quot; -- Minimize Average Chi-Square.</span>
+<span class="sd">             &quot;A2&quot; -- Mean Squared Correlation.</span>
 
 <span class="sd">    :type  maxiter: a positive integer object, default=100</span>
 <span class="sd">    :param maxiter: maximum iteration number in outer while loop of SATA algorithm.</span>
@@ -701,10 +695,13 @@
 <span class="sd">    :type  rand_seed: an integer object, default=0</span>
 <span class="sd">    :param rand_seed: random seed</span>
 
+<span class="sd">    :type  n_jobs: an integer object, default=1</span>
+<span class="sd">    :param n_jobs: the number of cores to be used for parallelization</span>
+
 <span class="sd">    :type vis: a boolean object, default=False</span>
 <span class="sd">    :param vis: if true, plot the criterion value sequence</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
+
 
     <span class="k">if</span> <span class="p">((</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong types of n,s,q.&quot;</span><span class="p">)</span>
@@ -719,8 +716,11 @@
     <span class="n">shoot_idx</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">time_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">best_crit</span> <span class="o">=</span> <span class="mf">1e10</span>
+    
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="n">gen_ud</span><span class="p">)(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">crit</span><span class="o">=</span><span class="n">crit</span><span class="p">,</span> 
+                                    <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="n">rand_seed</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nshoot</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nshoot</span><span class="p">):</span>
-        <span class="n">stat</span> <span class="o">=</span> <span class="n">gen_ud</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">crit</span><span class="o">=</span><span class="n">crit</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="n">rand_seed</span> <span class="o">+</span> <span class="n">nshoot</span><span class="p">)</span>
+        <span class="n">stat</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">crit_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="s2">&quot;criterion_history&quot;</span><span class="p">]))</span>
         <span class="n">shoot_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">crit_list</span><span class="p">))</span>
         <span class="n">time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="s2">&quot;time_consumed&quot;</span><span class="p">])</span>
@@ -756,7 +756,7 @@
     <span class="k">return</span> <span class="n">best_design</span></div>
 
 
-<div class="viewcode-block" id="gen_aud_ms"><a class="viewcode-back" href="../../modules.html#pyunidoe.pyunidoe.gen_aud_ms">[docs]</a><span class="k">def</span> <span class="nf">gen_aud_ms</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">crit</span><span class="o">=</span><span class="s2">&quot;CD2&quot;</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">nshoot</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vis</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="gen_aud_ms"><a class="viewcode-back" href="../../modules.html#pyunidoe.pyunidoe.gen_aud_ms">[docs]</a><span class="k">def</span> <span class="nf">gen_aud_ms</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">crit</span><span class="o">=</span><span class="s2">&quot;CD2&quot;</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">nshoot</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">vis</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function generates sequential Uniform Design of Experiments (Augmenting Runs) using diffrent initializations.</span>
 
@@ -777,17 +777,17 @@
 <span class="sd">    :type  crit: a character object, default=&quot;CD2&quot;</span>
 <span class="sd">    :param crit: criterion to be optimized:</span>
 
-<span class="sd">             &quot;CD2&quot;  --Centered L2 Discrepancy;</span>
+<span class="sd">             &quot;CD2&quot; -- Centered L2 Discrepancy;</span>
 
 <span class="sd">             &quot;WD2&quot; -- Wrap-around L2 Discrepancy;</span>
 
-<span class="sd">             &quot;MD2&quot;  --Mixture L2  Discrepancy;</span>
+<span class="sd">             &quot;MD2&quot; -- Mixture L2 Discrepancy;</span>
 
 <span class="sd">             &quot;maximin&quot; -- Maximin Discrepancy;</span>
 
-<span class="sd">             &quot;MC&quot; -- Minimize Coherence;</span>
+<span class="sd">             &quot;MC&quot; -- Minimum Coherence;</span>
 
-<span class="sd">             &quot;A2&quot; -- Minimize Average Chi-Square.</span>
+<span class="sd">             &quot;A2&quot; -- Mean Squared Correlation.</span>
 
 <span class="sd">    :type  maxiter: a positive integer object, default=100</span>
 <span class="sd">    :param maxiter: maximum iteration number in outer while loop of SATA algorithm.</span>
@@ -803,6 +803,9 @@
 
 <span class="sd">    :type  rand_seed: an integer object, default=0</span>
 <span class="sd">    :param rand_seed: random seed</span>
+<span class="sd">    </span>
+<span class="sd">    :type  n_jobs: an integer object, default=1</span>
+<span class="sd">    :param n_jobs: the number of cores to be used for parallelization</span>
 
 <span class="sd">    :type vis: a boolean object, default=False</span>
 <span class="sd">    :param vis: if true, plot the criterion value sequence</span>
@@ -830,8 +833,11 @@
     <span class="n">shoot_idx</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">time_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">best_crit</span> <span class="o">=</span> <span class="mf">1e10</span>
+    
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="n">gen_aud</span><span class="p">)(</span><span class="n">xp</span><span class="o">=</span><span class="n">xp</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">crit</span><span class="o">=</span><span class="n">crit</span><span class="p">,</span> 
+                                     <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="n">rand_seed</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nshoot</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nshoot</span><span class="p">):</span>
-        <span class="n">stat</span> <span class="o">=</span> <span class="n">gen_aud</span><span class="p">(</span><span class="n">xp</span><span class="o">=</span><span class="n">xp</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">crit</span><span class="o">=</span><span class="n">crit</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="n">rand_seed</span> <span class="o">+</span> <span class="n">nshoot</span><span class="p">)</span>
+        <span class="n">stat</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">crit_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="s2">&quot;criterion_history&quot;</span><span class="p">]))</span>
         <span class="n">shoot_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">crit_list</span><span class="p">))</span>
         <span class="n">time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="s2">&quot;time_consumed&quot;</span><span class="p">])</span>
@@ -867,7 +873,7 @@
     <span class="k">return</span> <span class="n">best_design</span></div>
 
 
-<div class="viewcode-block" id="gen_aud_col_ms"><a class="viewcode-back" href="../../modules.html#pyunidoe.pyunidoe.gen_aud_col_ms">[docs]</a><span class="k">def</span> <span class="nf">gen_aud_col_ms</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">crit</span><span class="o">=</span><span class="s2">&quot;CD2&quot;</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">nshoot</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vis</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="gen_aud_col_ms"><a class="viewcode-back" href="../../modules.html#pyunidoe.pyunidoe.gen_aud_col_ms">[docs]</a><span class="k">def</span> <span class="nf">gen_aud_col_ms</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">crit</span><span class="o">=</span><span class="s2">&quot;CD2&quot;</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">nshoot</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">vis</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function generates sequential Uniform Design of Experiments (Augmenting Factors) using diffrent initializations.</span>
 
@@ -888,17 +894,17 @@
 <span class="sd">    :type  crit: a character object, default=&quot;CD2&quot;</span>
 <span class="sd">    :param crit: criterion to be optimized:</span>
 
-<span class="sd">             &quot;CD2&quot;  --Centered L2 Discrepancy;</span>
+<span class="sd">             &quot;CD2&quot; -- Centered L2 Discrepancy;</span>
 
 <span class="sd">             &quot;WD2&quot; -- Wrap-around L2 Discrepancy;</span>
 
-<span class="sd">             &quot;MD2&quot;  --Mixture L2  Discrepancy;</span>
+<span class="sd">             &quot;MD2&quot; -- Mixture L2 Discrepancy;</span>
 
 <span class="sd">             &quot;maximin&quot; -- Maximin Discrepancy;</span>
 
-<span class="sd">             &quot;MC&quot; -- Minimize Coherence;</span>
+<span class="sd">             &quot;MC&quot; -- Minimum Coherence;</span>
 
-<span class="sd">             &quot;A2&quot; -- Minimize Average Chi-Square.</span>
+<span class="sd">             &quot;A2&quot; -- Mean Squared Correlation.</span>
 
 <span class="sd">    :type  maxiter: a positive integer object, default=100</span>
 <span class="sd">    :param maxiter: maximum iteration number in outer while loop of SATA algorithm.</span>
@@ -915,6 +921,9 @@
 <span class="sd">    :type  rand_seed: an integer object, default=0</span>
 <span class="sd">    :param rand_seed: random seed</span>
 
+<span class="sd">    :type  n_jobs: an integer object, default=1</span>
+<span class="sd">    :param n_jobs: the number of cores to be used for parallelization</span>
+<span class="sd">    </span>
 <span class="sd">    :type vis: a boolean object, default=False</span>
 <span class="sd">    :param vis: if true, plot the criterion value sequence</span>
 
@@ -941,8 +950,12 @@
     <span class="n">shoot_idx</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">time_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">best_crit</span> <span class="o">=</span> <span class="mf">1e10</span>
+    
+    
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="n">gen_aud_col</span><span class="p">)(</span><span class="n">xp</span><span class="o">=</span><span class="n">xp</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">crit</span><span class="o">=</span><span class="n">crit</span><span class="p">,</span> 
+                                     <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="n">rand_seed</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nshoot</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nshoot</span><span class="p">):</span>
-        <span class="n">stat</span> <span class="o">=</span> <span class="n">gen_aud_col</span><span class="p">(</span><span class="n">xp</span><span class="o">=</span><span class="n">xp</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">crit</span><span class="o">=</span><span class="n">crit</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="n">rand_seed</span> <span class="o">+</span> <span class="n">nshoot</span><span class="p">)</span>
+        <span class="n">stat</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">crit_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="s2">&quot;criterion_history&quot;</span><span class="p">]))</span>
         <span class="n">shoot_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">crit_list</span><span class="p">))</span>
         <span class="n">time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="s2">&quot;time_consumed&quot;</span><span class="p">])</span>
