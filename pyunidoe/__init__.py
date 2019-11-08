@@ -1,4 +1,5 @@
 from .pyunidoe import design_query
+from .pyunidoe import design_update
 from .pyunidoe import design_eval
 from .pyunidoe import gen_ud
 from .pyunidoe import gen_aud
