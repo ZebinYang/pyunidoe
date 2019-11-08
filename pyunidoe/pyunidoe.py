@@ -75,15 +75,88 @@ def design_query(n, s, q, crit="CD2", show_crit=True):
     if (crit == "MD2"):
         DataX = json.load(open(DATA_PATH + 'ud_md2.json'))
 
-    idx = np.where((np.array(DataX['n']) == n) & (np.array(DataX['s']) == s) & (np.array(DataX['q']) == q))[0]
-    if (idx.shape[0] == 0):
-        return None
-    else:
-        D = np.array(np.round(DataX['Design'][idx[0]]), dtype=int)
+    if (str(n) + "_" + str(s) + "_" + str(q) in DataX.keys()):
+        D = np.array(np.round(DataX[str(n) + "_" + str(s) + "_" + str(q)]), dtype=int)
         if(show_crit):
-            print("CD2 =", design_eval(D, "CD2"), "MD2 =", design_eval(D, "MD2"), "Maximin =", design_eval(D, "maximin"))
+            print("CD2 = ", design_eval(D, "CD2"), "MD2 = ", design_eval(D, "MD2"), "Maximin = ", design_eval(D, "maximin"))
+    else:
+        D = None
+
     return D
 
+
+def update_design(n, s, q, D, crit="CD2"):
+    """
+    This function takes size of desired design,criterion crit. If the required design exists in database, then return the design, else return NULL.
+
+    Parameters
+    ----------
+    :type  n: an integer object
+    :param n: run of experiments
+
+    :type  s: an integer object
+    :param s: number of experimental factors
+
+    :type  q: an integer object
+    :param q: number of experimental levels for each factor
+
+    :type  D: an np array
+    :param D: the design table that will be saved in Database.
+
+    :type  crit: a character object, default="CD2"
+    :param crit: criterion of the query:
+
+             "CD2": Centered L2 Discrepancy;
+
+             "MD2": Mixture L2 Discrepancy.
+
+    :type  show_crit: boolean
+    :param show_crit: choose to print the criteria value
+
+    """
+
+    if ((isinstance(n, int) & isinstance(s, int) & isinstance(q, int)) is False):
+        raise ValueError("Wrong types of n,s,q.")
+    elif ((n % q) != 0):
+        raise ValueError("n should be multiple of q.")
+    elif (n > q**s):
+        raise ValueError("n should not be greater than q^s.")
+    elif ((s < 1) | (n < 2) | (q < 2)):
+        raise ValueError("Invalid design table.")
+
+    success_flag = False
+    if (crit == "CD2"):
+        DataX = json.load(open(DATA_PATH + 'ud_cd2.json'))
+        if (str(n) + "_" + str(s) + "_" + str(q) in DataX.keys()):
+            current_obj = design_eval(DataX[str(n) + "_" + str(s) + "_" + str(q)], crit="CD2")
+            new_obj = design_eval(D, crit="CD2")
+            if new_obj <= current_obj:
+                DataX.update({str(n) + "_" + str(s) + "_" + str(q): D})
+                with open(DATA_PATH + 'ud_cd2.json', 'w') as fp:
+                    json.dump(DataX, fp)
+                success_flag = True
+        else:
+            DataX.update({str(n) + "_" + str(s) + "_" + str(q): D})
+            with open(DATA_PATH + 'ud_cd2.json', 'w') as fp:
+                json.dump(DataX, fp)
+            success_flag = True
+
+    if (crit == "MD2"):
+        DataX = json.load(open(DATA_PATH + 'ud_md2.json'))
+        if (str(n) + "_" + str(s) + "_" + str(q) in DataX.keys()):
+            current_obj = design_eval(DataX[str(n) + "_" + str(s) + "_" + str(q)], crit="MD2")
+            new_obj = design_eval(D, crit="CD2")
+            if new_obj <= current_obj:
+                DataX.update({str(n) + "_" + str(s) + "_" + str(q): D})
+                with open(DATA_PATH + 'ud_md2.json', 'w') as fp:
+                    json.dump(DataX, fp)
+                success_flag = True
+        else:
+            DataX.update({str(n) + "_" + str(s) + "_" + str(q): D})
+            with open(DATA_PATH + 'ud_md2.json', 'w') as fp:
+                json.dump(DataX, fp)
+            success_flag = True
+    return success_flag
 
 def design_eval(x, crit="CD2"):
     """
