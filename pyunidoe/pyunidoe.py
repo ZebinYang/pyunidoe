@@ -8,6 +8,7 @@ from joblib import Parallel, delayed
 from .pyunidoe_swig import CritEval, SATA_UD, SATA_AUD, SATA_AUD_COL
 
 __all__ = ["design_pairs_plot",
+           "design_update",
            "design_eval",
            "design_query",
            "gen_ud",
@@ -85,7 +86,7 @@ def design_query(n, s, q, crit="CD2", show_crit=True):
     return D
 
 
-def update_design(n, s, q, D, crit="CD2"):
+def design_update(n, s, q, D, crit="CD2"):
     """
     This function takes size of desired design,criterion crit. If the required design exists in database, then return the design, else return NULL.
 
