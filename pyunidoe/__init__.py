@@ -9,7 +9,7 @@ from .pyunidoe import gen_aud_col_ms
 from .pyunidoe import design_pairs_plot
 
 __all__ = ["design_query",
-        "update_design",
+        "design_update",
         "design_eval",
         "gen_ud",
         "gen_aud",
