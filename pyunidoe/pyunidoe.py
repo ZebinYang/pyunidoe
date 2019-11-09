@@ -124,8 +124,8 @@ def design_query(n, s, q, crit="CD2", show_crit=True):
     if (str(n) + "_" + str(s) + "_" + str(q) in db.keys()):
         design_table = np.array(np.round(db[str(n) + "_" + str(s) + "_" + str(q)]), dtype=int)
         if(show_crit):
-            print("CD2 = ", design_eval(design_table, "CD2"), "MD2 = ",
-                design_eval(design_table, "MD2"), "Maximin = ", design_eval(design_table, "maximin"))
+            print("CD2 =", design_eval(design_table, "CD2"), ", MD2 =",
+                design_eval(design_table, "MD2"), ", Maximin =", design_eval(design_table, "maximin"))
     else:
         design_table = None
 
