@@ -684,7 +684,7 @@ def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jobs=1,
                 ax.set_yticks([])
             if np.min(crit_list[i]) == best_crit:
                 ax.axvline(np.argmin(crit_list[i]), color="red", linewidth=1)
-        fig.suptitle("Best value = " + str(best_crit) + " in " + str(round(np.sum(time_list), 3)) + " sec",
+        fig.suptitle("Best value = " + str(best_crit) + " in " + str(round(np.max(time_list), 3)) + " sec",
                      fontsize=20,
                      x=0.5, y=1 - 0.03 * np.ceil(1.0 * nshoot / 5))
         fig.subplots_adjust(wspace=0)
@@ -801,7 +801,7 @@ def gen_aud_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jo
                 ax.set_yticks([])
             if np.min(crit_list[i]) == best_crit:
                 ax.axvline(np.argmin(crit_list[i]), color="red", linewidth=1)
-        fig.suptitle("Best value = " + str(best_crit) + " in " + str(round(np.sum(time_list), 3)) + " sec",
+        fig.suptitle("Best value = " + str(best_crit) + " in " + str(round(np.max(time_list), 3)) + " sec",
                      fontsize=20,
                      x=0.5, y=1 - 0.03 * np.ceil(1.0 * nshoot / 5))
         fig.subplots_adjust(wspace=0)
@@ -886,7 +886,6 @@ def gen_aud_col_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, 
     time_list = []
     best_crit = 1e10
     
-    
     stats = Parallel(n_jobs=n_jobs)(delayed(gen_aud_col)(xp=xp, n=n, s=s, q=q, crit=crit, 
                                      maxiter=maxiter, rand_seed=rand_seed + i) for i in range(nshoot))
     for i in range(nshoot):
@@ -919,7 +918,7 @@ def gen_aud_col_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, 
                 ax.set_yticks([])
             if np.min(crit_list[i]) == best_crit:
                 ax.axvline(np.argmin(crit_list[i]), color="red", linewidth=1)
-        fig.suptitle("Best value = " + str(best_crit) + " in " + str(round(np.sum(time_list), 3)) + " sec",
+        fig.suptitle("Best value = " + str(best_crit) + " in " + str(round(np.max(time_list), 3)) + " sec",
                      fontsize=20,
                      x=0.5, y=1 - 0.03 * np.ceil(1.0 * nshoot / 5))
         fig.subplots_adjust(wspace=0)
