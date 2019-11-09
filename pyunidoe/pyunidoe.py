@@ -116,7 +116,7 @@ def design_query(n, s, q, crit="CD2", show_crit=True):
 
     if (crit == "CD2"):
         db = json.load(open(DATA_PATH + 'ud_cd2.json'))
-    if (crit == "MD2"):
+    elif (crit == "MD2"):
         db = json.load(open(DATA_PATH + 'ud_md2.json'))
     else:
         raise ValueError("Invalid criterion.")
