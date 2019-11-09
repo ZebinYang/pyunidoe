@@ -118,6 +118,8 @@ def design_query(n, s, q, crit="CD2", show_crit=True):
         db = json.load(open(DATA_PATH + 'ud_cd2.json'))
     if (crit == "MD2"):
         db = json.load(open(DATA_PATH + 'ud_md2.json'))
+    else:
+        raise ValueError("Invalid criterion.")
 
     if (str(n) + "_" + str(s) + "_" + str(q) in db.keys()):
         design_table = np.array(np.round(db[str(n) + "_" + str(s) + "_" + str(q)]), dtype=int)
@@ -180,12 +182,12 @@ def design_update(n, s, q, x, crit="CD2"):
             current_obj = design_eval(np.array(db[str(n) + "_" + str(s) + "_" + str(q)]), crit="CD2")
             new_obj = design_eval(x, crit="CD2")
             if new_obj <= current_obj:
-                db.update({str(n) + "_" + str(s) + "_" + str(q): x})
+                db.update({str(n) + "_" + str(s) + "_" + str(q): x.tolist()})
                 with open(DATA_PATH + 'ud_cd2.json', 'w') as fp:
                     json.dump(db, fp)
                 success_flag = True
         else:
-            db.update({str(n) + "_" + str(s) + "_" + str(q): x})
+            db.update({str(n) + "_" + str(s) + "_" + str(q): x.tolist()})
             with open(DATA_PATH + 'ud_cd2.json', 'w') as fp:
                 json.dump(db, fp)
             success_flag = True
@@ -196,12 +198,12 @@ def design_update(n, s, q, x, crit="CD2"):
             current_obj = design_eval(np.array(db[str(n) + "_" + str(s) + "_" + str(q)]), crit="MD2")
             new_obj = design_eval(x, crit="CD2")
             if new_obj <= current_obj:
-                db.update({str(n) + "_" + str(s) + "_" + str(q): x})
+                db.update({str(n) + "_" + str(s) + "_" + str(q): x.tolist()})
                 with open(DATA_PATH + 'ud_md2.json', 'w') as fp:
                     json.dump(db, fp)
                 success_flag = True
         else:
-            db.update({str(n) + "_" + str(s) + "_" + str(q): x})
+            db.update({str(n) + "_" + str(s) + "_" + str(q): x.tolist()})
             with open(DATA_PATH + 'ud_md2.json', 'w') as fp:
                 json.dump(db, fp)
             success_flag = True
