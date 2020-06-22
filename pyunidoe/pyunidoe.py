@@ -71,8 +71,8 @@ def design_eval(x, crit="CD2"):
 
     if (not isinstance(x, np.ndarray)):
         raise ValueError("The design matrix must be a numpy array.")
-    elif ((np.min(x) <= 0) | (x.dtype != np.int)):
-        raise ValueError("The values in design matrix should be integers: 1,2,3,...")
+    elif ((np.min(x) <= 0)):
+        raise ValueError("The values in design matrix should be positive.")
 
     nlevel = int(round(np.max(x) - np.min(x) + 1))
     return CritEval(x.tolist(), nlevel, crit)
@@ -134,7 +134,7 @@ def design_query(n, s, q, crit="CD2", show_crit=True):
 
 def design_update(n, s, q, x, crit="CD2"):
     """
-    This function takes size of desired design,criterion crit. If the required design exists in database, then return the design, else return NULL.
+    This function takes size of desired design, criterion crit. If the required design exists in database, then return the design, else return NULL.
 
     Parameters
     ----------
