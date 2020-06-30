@@ -210,7 +210,7 @@ def design_update(n, s, q, x, crit="CD2"):
     return success_flag
 
 
-def gen_ud(n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, hits_ratio=0.1, levelpermt=False, rand_seed=0, vis=False):
+def gen_ud(n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, hits_ratio=0.1, levelpermt=False, random_state=0, vis=False):
     """
     This function takes n,s,q and other arguments to output a list(described below).
 
@@ -259,8 +259,8 @@ def gen_ud(n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, 
     :type  hits_ratio: a float object, default=0.1
     :param hits_ratio: Default value is 0.1, which is the ratio to accept changes of design in inner for loop
 
-    :type  rand_seed: an integer object, default=0
-    :param rand_seed: random seed
+    :type  random_state: an integer object, default=0
+    :param random_state: random seed
 
     :type vis: a boolean object, default=False
     :param vis: if true, plot the criterion value sequence
@@ -314,7 +314,7 @@ def gen_ud(n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, 
         elif (any(np.array([v for i in range(initX.shape[1]) for v in np.unique(initX[:, i], return_counts=True)[1]]) > n / q)):
             raise ValueError("initX does not follow a balanced design.")
 
-    results = SATA_UD(n, s, q, init, initX.tolist(), crit, maxiter, hits_ratio, levelpermt, rand_seed)
+    results = SATA_UD(n, s, q, init, initX.tolist(), crit, maxiter, hits_ratio, levelpermt, random_state)
     stat = {"initial_design": np.array(np.round(results.Init_Design), dtype=int),
             "final_design": np.array(np.round(results.Final_Design), dtype=int),
             "initial_criterion": results.Init_Obj,
@@ -338,7 +338,7 @@ def gen_ud(n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, 
     return stat
 
 
-def gen_aud(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, hits_ratio=0.1, levelpermt=False, rand_seed=0, vis=False):
+def gen_aud(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, hits_ratio=0.1, levelpermt=False, random_state=0, vis=False):
     """
     This function takes n,s,q; a unchanged initial design and other arguments to output a list (described below).
 
@@ -390,8 +390,8 @@ def gen_aud(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=
     :type  hits_ratio: a float object, default=0.1
     :param hits_ratio: Default value is 0.1, which is the ratio to accept changes of design in inner for loop
 
-    :type  rand_seed: an integer object, default=0
-    :param rand_seed: random seed
+    :type  random_state: an integer object, default=0
+    :param random_state: random seed
 
     :type vis: a boolean object, default=False
     :param vis: if true, plot the criterion value sequence
@@ -437,7 +437,7 @@ def gen_aud(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=
             raise ValueError("initX does not follow a balanced design.")
 
     nnp = xp.shape[0]
-    results = SATA_AUD(xp.tolist(), n - nnp, s, q, init, initX.tolist(), crit, maxiter, hits_ratio, levelpermt, rand_seed)
+    results = SATA_AUD(xp.tolist(), n - nnp, s, q, init, initX.tolist(), crit, maxiter, hits_ratio, levelpermt, random_state)
     stat = {"initial_design": np.array(np.round(results.Init_Design), dtype=int),
             "final_design": np.array(np.round(results.Final_Design), dtype=int),
             "initial_criterion": results.Init_Obj,
@@ -460,7 +460,7 @@ def gen_aud(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=
     return stat
 
 
-def gen_aud_col(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, hits_ratio=0.1, levelpermt=False, rand_seed=0, vis=False):
+def gen_aud_col(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxiter=100, hits_ratio=0.1, levelpermt=False, random_state=0, vis=False):
     """
     This function takes n,s,q; a unchanged initial design and other arguments to output a list (described below).
 
@@ -512,8 +512,8 @@ def gen_aud_col(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxi
     :type  hits_ratio: a float object, default=0.1
     :param hits_ratio: Default value is 0.1, which is the ratio to accept changes of design in inner for loop
 
-    :type  rand_seed: an integer object, default=0
-    :param rand_seed: random seed
+    :type  random_state: an integer object, default=0
+    :param random_state: random seed
 
     :type vis: a boolean object, default=False
     :param vis: if true, plot the criterion value sequence
@@ -559,7 +559,7 @@ def gen_aud_col(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxi
             raise ValueError("initX does not follow a balanced design.")
 
     nvp = xp.shape[1]
-    results = SATA_AUD_COL(xp.tolist(), s - nvp, q, init, initX.tolist(), crit, maxiter, hits_ratio, levelpermt, rand_seed)
+    results = SATA_AUD_COL(xp.tolist(), s - nvp, q, init, initX.tolist(), crit, maxiter, hits_ratio, levelpermt, random_state)
     stat = {"initial_design": np.array(np.round(results.Init_Design), dtype=int),
             "final_design": np.array(np.round(results.Final_Design), dtype=int),
             "initial_criterion": results.Init_Obj,
@@ -582,15 +582,12 @@ def gen_aud_col(xp, n, s, q, init="rand", initX=np.array([[]]), crit="CD2", maxi
     return stat
 
 
-def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jobs=1, vis=False):
+def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, random_state=0, n_jobs=1, vis=False):
     """
     This function generates Uniform Design of Experiments using diffrent initializations.
 
     Parameters
     ----------
-    :type  xp: a numpy integer matrix object
-    :param xp: representing the previous existing design matrix
-
     :type  n: an integer object
     :param n: run of experiments
 
@@ -621,14 +618,8 @@ def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jobs=1,
     :type  nshoot: a positive integer object, default=5
     :param nshoot: total counts to try different initial designs
 
-    :type  rand_seed: an integer object, default=0
-    :param rand_seed: random seed
-
-    :type  hits_ratio: a float object, default=0.1
-    :param hits_ratio: Default value is 0.1, which is the ratio to accept changes of design in inner for loop
-
-    :type  rand_seed: an integer object, default=0
-    :param rand_seed: random seed
+    :type  random_state: an integer object, default=0
+    :param random_state: random seed
 
     :type  n_jobs: an integer object, default=1
     :param n_jobs: the number of cores to be used for parallelization
@@ -653,7 +644,7 @@ def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jobs=1,
     best_crit = 1e10
     
     stats = Parallel(n_jobs=n_jobs)(delayed(gen_ud)(n=n, s=s, q=q, crit=crit, 
-                                    maxiter=maxiter, rand_seed=rand_seed + i) for i in range(nshoot))
+                                    maxiter=maxiter, random_state=random_state + i) for i in range(nshoot))
     for i in range(nshoot):
         stat = stats[i]
         crit_list.append(list(stat["criterion_history"]))
@@ -691,7 +682,7 @@ def gen_ud_ms(n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jobs=1,
     return best_design
 
 
-def gen_aud_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jobs=1, vis=False):
+def gen_aud_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, random_state=0, n_jobs=1, vis=False):
     """
     This function generates sequential Uniform Design of Experiments (Augmenting Runs) using diffrent initializations.
 
@@ -730,14 +721,8 @@ def gen_aud_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jo
     :type  nshoot: a positive integer object, default=5
     :param nshoot: total counts to try different initial designs
 
-    :type  rand_seed: an integer object, default=0
-    :param rand_seed: random seed
-
-    :type  hits_ratio: a float object, default=0.1
-    :param hits_ratio: Default value is 0.1, which is the ratio to accept changes of design in inner for loop
-
-    :type  rand_seed: an integer object, default=0
-    :param rand_seed: random seed
+    :type  random_state: an integer object, default=0
+    :param random_state: random seed
     
     :type  n_jobs: an integer object, default=1
     :param n_jobs: the number of cores to be used for parallelization
@@ -770,7 +755,7 @@ def gen_aud_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jo
     best_crit = 1e10
     
     stats = Parallel(n_jobs=n_jobs)(delayed(gen_aud)(xp=xp, n=n, s=s, q=q, crit=crit, 
-                                     maxiter=maxiter, rand_seed=rand_seed + i) for i in range(nshoot))
+                                     maxiter=maxiter, random_state=random_state + i) for i in range(nshoot))
     for i in range(nshoot):
         stat = stats[i]
         crit_list.append(list(stat["criterion_history"]))
@@ -808,7 +793,7 @@ def gen_aud_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jo
     return best_design
 
 
-def gen_aud_col_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, n_jobs=1, vis=False):
+def gen_aud_col_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, random_state=0, n_jobs=1, vis=False):
     """
     This function generates sequential Uniform Design of Experiments (Augmenting Factors) using diffrent initializations.
 
@@ -847,14 +832,8 @@ def gen_aud_col_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, 
     :type  nshoot: a positive integer object, default=5
     :param nshoot: total counts to try different initial designs
 
-    :type  rand_seed: an integer object, default=0
-    :param rand_seed: random seed
-
-    :type  hits_ratio: a float object, default=0.1
-    :param hits_ratio: Default value is 0.1, which is the ratio to accept changes of design in inner for loop
-
-    :type  rand_seed: an integer object, default=0
-    :param rand_seed: random seed
+    :type  random_state: an integer object, default=0
+    :param random_state: random seed
 
     :type  n_jobs: an integer object, default=1
     :param n_jobs: the number of cores to be used for parallelization
@@ -887,7 +866,7 @@ def gen_aud_col_ms(xp, n, s, q, crit="CD2", maxiter=100, nshoot=5, rand_seed=0, 
     best_crit = 1e10
     
     stats = Parallel(n_jobs=n_jobs)(delayed(gen_aud_col)(xp=xp, n=n, s=s, q=q, crit=crit, 
-                                     maxiter=maxiter, rand_seed=rand_seed + i) for i in range(nshoot))
+                                     maxiter=maxiter, random_state=random_state + i) for i in range(nshoot))
     for i in range(nshoot):
         stat = stats[i]
         crit_list.append(list(stat["criterion_history"]))
