@@ -73,7 +73,7 @@ Optimizer::Optimizer(vector<vector<double> > x_init, int nnew_init, int np_init,
     allpairs = nnew * (nnew -1)/2 ;
     for (i=0;i<nv;i++)
     {
-        maxcol += 5*optimize_columns[i];
+        maxcol += 50 * optimize_columns[i];
         allpairs_temp = allpairs;
         max_freq = 0; min_freq = nnew;
         valid_nlevel = 0, valid_nvalues = 0;
