@@ -70,10 +70,10 @@ Optimizer::Optimizer(vector<vector<double> > x_init, int nnew_init, int np_init,
     nelement_pairs.assign(nv, 0);
     sorted_value_index.assign(static_cast<unsigned long long int>(nsamp), vector<int>(nv, 0));
     sorted_level_index.assign(static_cast<unsigned long long int>(nnew), vector<int>(nv, 0));
-    allpairs = nnew * (nnew -1)/2 ;
+    allpairs = nnew * (nnew -1) / 2;
     for (i=0;i<nv;i++)
     {
-        maxcol += 50 * optimize_columns[i];
+        maxcol += 10 * optimize_columns[i];
         allpairs_temp = allpairs;
         max_freq = 0; min_freq = nnew;
         valid_nlevel = 0, valid_nvalues = 0;
