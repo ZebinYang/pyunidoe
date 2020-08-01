@@ -62,7 +62,7 @@ Optimizer::Optimizer(vector<vector<double> > x_init, int nnew_init, int np_init,
     //  Initialize some important parameters
     alpha1 = 1.25;
     alpha2 = 0.8;
-    maxcol = 0;
+    maxcol = 100;
     maxpairs = 0;
     idx.assign(nnew, 0);
     temp.assign(nnew, 0);
@@ -75,7 +75,6 @@ Optimizer::Optimizer(vector<vector<double> > x_init, int nnew_init, int np_init,
     allpairs = nnew * (nnew -1) / 2;
     for (i=0;i<nv;i++)
     {
-        maxcol += 50 * optimize_columns[i];
         allpairs_temp = allpairs;
         max_freq = 0; min_freq = nnew;
         valid_nlevel = 0, valid_nvalues = 0;
@@ -111,7 +110,6 @@ Optimizer::Optimizer(vector<vector<double> > x_init, int nnew_init, int np_init,
         if (maxpairs<nlevel_pairs[i]) maxpairs=nlevel_pairs[i];
         if (maxpairs<nelement_pairs[i]) maxpairs=nelement_pairs[i];
     }
-    maxcol = min(max(maxcol, 50), 200);
     //  Initialize the exchange index list
     ind1.assign(maxpairs, 0);
     ind2.assign(maxpairs, 0);
