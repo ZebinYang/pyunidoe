@@ -60,6 +60,8 @@ Optimizer::Optimizer(vector<vector<double> > x_init, int nnew_init, int np_init,
     level_permt.assign(nv, level_permt_init);
 
     //  Initialize some important parameters
+    alpha1 = 1.2;
+    alpha2 = 0.8;
     maxcol = 0;
     maxpairs = 0;
     idx.assign(nnew, 0);
@@ -191,7 +193,6 @@ vector<double> Optimizer::SATA_Optimize()
             }
         }
         if ((hits / maxcol) < hits_ratio) th = th * alpha1; else th = th * alpha2;
-        cout<<"th: "<<th<<endl;
         critobj_vector.push_back(global_obj);
     }
     return (critobj_vector);
