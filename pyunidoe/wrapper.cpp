@@ -17,7 +17,7 @@ double CritEval(vector<vector<double> > x0, int nlevel, char* crit)
 {
   Criteria *c;
   double criteria = 0;
-  int i, j, nv = (int) x0[0].size(), nsamp= (int) x0.size();
+  int i, j, nv = (int) x0[0].size(), nsamp = (int) x0.size();
   int critopt = criteria_selector(crit);
   vector<vector<double> > x(nsamp, vector<double>(nv, 0));
 
