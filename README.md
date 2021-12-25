@@ -79,4 +79,4 @@ print(pydoe.design_eval(x3_multi,crit="CD2"))
 More examples can be referred to the [documentation](https://zebinyang.github.io/pyunidoe/build/html/examples.html)
 
 ## Contact:
-If you find any bugs or have any suggestions, please contact us via email: yangzb2010@hku.hk or ajzhang@hku.hk.
+If you find any bugs or have any suggestions, please contact us via email: yangzb2010@connect.hku.hk or ajzhang@umich.edu.
