@@ -47,8 +47,10 @@ double CritEval(vector<vector<double> > x0, int nlevel, char* crit)
     c = new CD2(x, nsamp, nv, nlevel);
   break;
   }
-  c->evaluate_criteria();
   criteria = c->get_criteria();
+  x.clear();
+  x.shrink_to_fit();
+  delete c;
   return(criteria);
 }
 

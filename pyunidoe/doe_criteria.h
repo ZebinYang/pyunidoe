@@ -30,6 +30,7 @@ protected:
 
 public:
     Criteria(int,int,int);
+    virtual ~Criteria(){};
     double get_criteria();
     double get_surrogate_criteria();
     double get_columnwise_exchange(int ncol,int ncp, vector<int> idx1,vector<int> idx2);
@@ -40,6 +41,8 @@ public:
     virtual void evaluate_criteria() = 0;
     virtual vector<vector<double> > get_design() = 0;
     virtual double columnwise_exchange(int ncol,int ncp, vector<int> idx1,vector<int> idx2) = 0;
+
+    virtual double calculate_lower_bound(){return(0.0);} // only available for some criteria.
     virtual vector<double> get_criteria_matrix() {vector<double> col_count(nv, 1); return (col_count);};
 };
 

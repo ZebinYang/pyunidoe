@@ -12,6 +12,7 @@ class A2: public Criteria{
 
     vector<vector<double> > CORR, tempCORR;
     double A;
+    
 public:
     A2(vector<vector<double> > init,int nsamp_init,int nv_init, int nlevel_init): Criteria(nsamp_init,nv_init, nlevel_init) {
         init_design(init);
