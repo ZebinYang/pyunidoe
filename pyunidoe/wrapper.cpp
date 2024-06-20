@@ -54,7 +54,7 @@ double CritEval(vector<vector<double> > x0, int nlevel, char* crit)
   return(criteria);
 }
 
-vector<vector<double> > Generate_init_matrix(char* init_method, int nsamp, int nv, int nlevel, vector<vector<double> > initX)
+vector<vector<double> > Generate_init_matrix(char* init_method, int nsamp, int nv, int nlevel, vector<vector<double> > initX, int rand_seed)
 {
   int i,j;
   vector<double> col;
@@ -73,7 +73,8 @@ vector<vector<double> > Generate_init_matrix(char* init_method, int nsamp, int n
     for(i=1;i<=nsamp;i++) col.push_back((i%nlevel)+1.0);
     for(i=0;i<nv;i++)
     {
-      random_shuffle (col.begin(), col.end());
+      mt19937 rng(rand_seed);
+      shuffle(col.begin(), col.end(), rng);
       for(j=0;j<nsamp;j++)  return_matrix[j][i] = col[j];
     }
   }
@@ -147,7 +148,7 @@ List SATA_UD(int nsamp, int nv, int nlevel, char* init_method, vector<vector<dou
 
   srand(rand_seed);
   start_time = clock();
-  Init_matrix = Generate_init_matrix(init_method,nsamp,nv,nlevel,initX);
+  Init_matrix = Generate_init_matrix(init_method,nsamp,nv,nlevel,initX,rand_seed);
   for(i=0;i<nsamp;i++) for(j=0;j<nv;j++) x[i][j] = Init_matrix[i][j];
   Optimizer opt(x, nsamp, 0, nv, nlevel, optimize_columns, critopt, maxiter, hits_ratio, levelpermt);
   critobj_vector = opt.SATA_Optimize();
@@ -231,7 +232,7 @@ List SATA_AUD_COL(vector<vector<double> > xp, int nvnew, int nlevel, char* init_
 
   srand(rand_seed);
   start_time = clock();
-  InputX = Generate_init_matrix(init_method,nsamp,nvnew,nlevel,initX);
+  InputX = Generate_init_matrix(init_method,nsamp,nvnew,nlevel,initX,rand_seed);
   for(j=0;j<nvp;j++) optimize_columns[j] = 0;
   for(i=0;i<nsamp;i++)
   {

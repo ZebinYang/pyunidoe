@@ -7,6 +7,7 @@
 #include <cmath>
 #include <algorithm>
 #include <string.h>
+#include <random>
 #include "doe_optimizer.h"
 
 using namespace std;
@@ -21,7 +22,7 @@ struct List {
 };
 
 int criteria_selector(char* crit);
-vector<vector<double> > Generate_init_matrix(char* init_method, int nsamp, int nv, int nlevel, vector<vector<double> > initX);
+vector<vector<double> > Generate_init_matrix(char* init_method, int nsamp, int nv, int nlevel, vector<vector<double> > initX, int rand_seed);
 vector<vector<double> > Generate_Aug_matrix(char* init_method, vector< vector < double > > xp, int nnew, int nv,
                                   int nlevel, vector< vector < double > > initX);
 double CritEval(vector<vector<double> > x0, int nlevel, char* crit);
